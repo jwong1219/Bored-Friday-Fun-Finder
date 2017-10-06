@@ -5,30 +5,49 @@ event.preventDefault();
 console.log($("#name").val().trim());
 console.log($("#zipcode").val().trim());
 
-  var Url = "https://app.ticketmaster.com/discovery/v2/events.json?" ;
+
+
+  var Url = "https://app.ticketmaster.com/discovery/v2/events.json?&sort=date,asc&";
 
   var apikey = "&apikey=JRiceOsMrH7LY3ePHpJNLPjE1ZgeFGAD"
   var zipcode = "&postalCode=" + $("#zipcode").val().trim();
   var name = $("#name").val().trim();
   var size = "size=" + 12;
-  var queryUrl = Url + size + zipcode + apikey;
+  var date = "&onsalesEndDateTime=" + moment().format("YYYY-MM-DD");
+  var queryUrl = Url + size + date + zipcode + apikey;
+  console.log(date);
   console.log(queryUrl);
-  // $.ajax({
-  //   type:"GET",
-  //   url:"https://app.ticketmaster.com/discovery/v2/events.json?size=1&apikey=JRiceOsMrH7LY3ePHpJNLPjE1ZgeFGAD",
-  //   async:true,
-  //   dataType: "json",
-  //   success: function(json) {
-  //               console.log(json);
-  //               // Parse the response.
-  //               // Do other things.
-  //            },
-  //   error: function(xhr, status, err) {
-  //               // This time, we do not end up here!
-  //            }
-  // });
 
-})
+// Ajax call
+  $.ajax({
+      url: queryUrl,
+      method: "GET"
+    }).done(function(response) {
+        
+        console.log(response);
+
+        var results = response._embedded.events;
+        console.log(results);      
+
+//iterate all events 
+
+        for(var i = 0;i < results.length; i++){
+
+        var cardDiv = $("<div>");
+        
+        var eventName = $("<p>");
+        eventName.html(results[i].name);
+        
+        var eventPoster = $("<img>");
+
+        cardDiv.append(eventName);
+        $("#resultsPanel").append(cardDiv);
+          
+        }
+
+
+      })
+});
 
 $(".eventsBtn").on("click",function(){
 
