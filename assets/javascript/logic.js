@@ -28,12 +28,15 @@ console.log($("#zipcode").val().trim());
   //            }
   // });
 
-
 })
 
 $(".eventsBtn").on("click",function(){
 
-alert("you click events");
 
+  var url= "https://www.eventbriteapi.com/v3/events/search/?date_modified.keyword=today&";
+  var zipcode = "location.address=" + $("#zipcode").val().trim();
+  var token = "&token=VHOSAZQCRGKLWAAH7UX2" 
+  var queryUrl = url + zipcode + token;
+  console.log(queryUrl);
 })
 
