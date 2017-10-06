@@ -34,13 +34,20 @@ console.log($("#zipcode").val().trim());
         for(var i = 0;i < results.length; i++){
 
         var cardDiv = $("<div>");
+        cardDiv.addClass("col-xs-4");
+
         
         var eventName = $("<p>");
         eventName.html(results[i].name);
         
         var eventPoster = $("<img>");
-
+        //eventPoster.html(results[i].images[1].url);
+        eventPoster.attr("src",results[i].images[1].url);
+        eventPoster.attr("width","200px");
+        
         cardDiv.append(eventName);
+        cardDiv.append(eventPoster);
+
         $("#resultsPanel").append(cardDiv);
           
         }
