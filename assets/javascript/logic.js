@@ -2,7 +2,7 @@ $(".entertainmentBtn").on("click",function(event){
 
 
 event.preventDefault();
-$("#resultsPanel").empty();
+$("#deck").empty();
 
 
 console.log($("#name").val().trim());
@@ -51,7 +51,7 @@ console.log($("#zipcode").val().trim());
         cardDiv.append(eventName);
         cardDiv.append(eventPoster);
 
-        $("#resultsPanel").append(cardDiv);
+        $("#deck").append(cardDiv);
                   
         }
       userSelectsCard();
@@ -63,7 +63,7 @@ console.log($("#zipcode").val().trim());
 $(".eventsBtn").on("click",function(){
 
   event.preventDefault();
-  $("#resultsPanel").empty();
+  $("#deck").empty();
 
   console.log($("#name").val().trim());
   console.log($("#zipcode").val().trim());
@@ -105,7 +105,7 @@ $(".eventsBtn").on("click",function(){
           cardDiv.append(eventName);
           cardDiv.append(eventPoster);
 
-          $("#resultsPanel").append(cardDiv);
+          $("#deck").append(cardDiv);
                   
         }
     //calls content card listener
@@ -122,7 +122,7 @@ function userSelectsCard() {
   // FE to add modal styling & html
   console.log("content card clicked");
   //FE to grab URL of content card click & add to yes button
-  
+
 
   }); //end  content card listeners
 
