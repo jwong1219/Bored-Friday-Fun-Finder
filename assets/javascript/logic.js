@@ -82,21 +82,21 @@ $(".eventsBtn").on("click",function(){
   event.preventDefault();
   $("#deck").empty();
 
-  console.log($("#name").val().trim());
-  console.log($("#zipcode").val().trim());
-  name = $("#name").val().trim();
-  var url= "https://www.eventbriteapi.com/v3/events/search/?date_modified.keyword=today&";
-  var zipcodeUrlPath = "location.address=";
-  zipcode = $("#zipcode").val().trim();
-  var token = "&token=VHOSAZQCRGKLWAAH7UX2" 
-  var queryUrl = url + zipcodeUrlPath+ zipcode + token;
-  console.log(queryUrl);
+    console.log($("#name").val().trim());
+    console.log($("#zipcode").val().trim());
+    name = $("#name").val().trim();
+    var url= "https://www.eventbriteapi.com/v3/events/search/?date_modified.keyword=today&";
+    var zipcodeUrlPath = "location.address=";
+    zipcode = $("#zipcode").val().trim();
+    var token = "&token=VHOSAZQCRGKLWAAH7UX2" 
+    var queryUrl = url + zipcodeUrlPath+ zipcode + token;
+    console.log(queryUrl);
 
   // Ajax call
   $.ajax({
-      url: queryUrl,
-      method: "GET"
-    }).done(function(response) {
+          url: queryUrl,
+          method: "GET"
+        }).done(function(response) {
         
         console.log(response);
 
@@ -109,10 +109,25 @@ $(".eventsBtn").on("click",function(){
 
           var cardDiv = $("<div>");
           cardDiv.addClass("col-xs-4");        
-          cardDiv.addClass("contentCard")
+          cardDiv.addClass("contentCard");
           cardDiv.attr("data-url",results[i].url);
           cardDiv.attr("data-name",results[i].name.text);
+          cardDiv.attr("data-description", results[i].description.text);
+          cardDiv.attr("data-placement","right");
+          cardDiv.attr("data-toggle","popover");
           
+
+          //attribute for data-date
+          var localTime = results[i].start.local;
+          console.log(localTime.split("T"));
+          var dateSplit = localTime.split("T");
+          var dateArray = dateSplit[0];
+          // localTime.split("T")
+          cardDiv.attr("data-date",dateArray);
+          //attribute for data-time
+          var timeArray = dateSplit[1];
+          cardDiv.attr("date-time", timeArray);
+
           var eventName = $("<p>");
           eventName.html(results[i].name.text);
           
@@ -155,9 +170,9 @@ function userSelectsCard() {
 
     $("#yes").on("click", function() {
 
-      var eventName = $(".contentCard").data("name");
-      var eventPoster = $(".contentCard").data("url");
-      var newEvent = database.ref().push();
+        var eventName = $(".contentCard").data("name");
+        var eventPoster = $(".contentCard").data("url");
+        var newEvent = database.ref().push();
 
       newEvent.set({
         nameFB: name,
@@ -167,9 +182,7 @@ function userSelectsCard() {
       });
 
 
-    });
-
-
+    }); //end yes button listeners
 }
 
 
