@@ -1,3 +1,10 @@
+body {
+  background-image: url("../images/sf-skyline.jpeg");
+  background-position-x: -336px;
+  background-position-y: top;
+  background-size: 2008px;
+}
+
 #welcomeModal {
   /*width: 70%;
   height: 50%;*/
@@ -11,4 +18,7 @@
   position: relative;
   left: 15%;
   top: 36%;
+  opacity: .9;
+  background-color: #6d6c6c;
+  color: khaki;
 }
