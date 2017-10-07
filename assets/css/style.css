@@ -1,8 +1,13 @@
+* {
+  border-radius: 0 !important;
+}
+
 body {
   background-image: url("../images/sf-skyline.jpeg");
-  background-position-x: -336px;
+  background-position-x: 42%;
   background-position-y: top;
-  background-size: 2008px;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 #welcomeModal {
@@ -12,6 +17,7 @@ body {
 
 .modal-content {
   height: 37%;
+  min-height: 337px;
   width: 70%;
   padding: 30px;
   padding-top: 13px;
@@ -19,6 +25,20 @@ body {
   left: 15%;
   top: 36%;
   opacity: .9;
-  background-color: #6d6c6c;
-  color: khaki;
+  background-color: #1a1d33;
+  color: #f38a05;
+}
+
+#welcomeMessage {
+  font-size: 25px;
+}
+
+.interest-btn {
+  background-color: #3f3e3e;
+  opacity: 1.5;
+  margin-right: 10px;
+}
+
+.form-control {
+  background-color: silver;
 }
