@@ -54,10 +54,9 @@ console.log($("#zipcode").val().trim());
         $("#deck").append(cardDiv);
                   
         }
-
-
+      userSelectsCard();
       })
-});
+}); //End Ticket Master Button Listener
 
 
 //EventBrite
@@ -109,6 +108,23 @@ $(".eventsBtn").on("click",function(){
           $("#deck").append(cardDiv);
                   
         }
+    //calls content card listener
+    userSelectsCard();
     })
-})
+    
+}) //end eventBrite Button Listener
+
+//content
+function userSelectsCard() {
+
+  $(".contentCard").on("click", function(){
+
+  // FE to add modal styling & html
+  console.log("content card clicked");
+  //FE to grab URL of content card click & add to yes button
+
+
+  }); //end  content card listeners
+
+}
 
