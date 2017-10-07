@@ -12,7 +12,8 @@
 
 <body>
  
-	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#welcomeModal">
+	<button type="button" id="launchModal" class="btn btn-primary btn-lg">
+	<!-- <button type="button" id="launchModal" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#welcomeModal"> -->
 	 Launch demo modal </button>					<!-- Button Issue -->
 	<div id="welcomeModal" class="modal fade" data-show="true">			<!-- Modal not showing -->
 		<div class="modal-content">											<!-- 12:10pm Modal working -->
@@ -36,7 +37,26 @@
 		</div>
 	</div>
 
+	<div class="row">
+		<div class="col-xs-8 col-xs-offset-2">
+			<div class="panel panel-default text-center" id="resultsPanel">
+			  <div class="panel-heading">Here's what we found for you</div>
+			  <div class="panel-body">
+			    <div class="row">
+						<div class="col-xs-2"> <!-- for the re-search buttons -->
+							<button type = "submit" class="btn interest-btn entertainmentBtn">Entertainment</button>
+							<button type = "submit" class="btn interest-btn eventsBtn">Events</button>
+						</div>
+						<div class="col-xs-10"> <!--for the cards -->
+							<div class="row" id="deck">
 
+							</div>
+						</div>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</div>
 
 <script type="text/javascript" src="assets/javascript/logic.js"></script>
 <script type="text/javascript" src="assets/javascript/animate.js"></script>

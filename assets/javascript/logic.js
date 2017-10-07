@@ -2,7 +2,7 @@ $(".entertainmentBtn").on("click",function(event){
 
 
 event.preventDefault();
-$("#resultsPanel").empty();
+$("#deck").empty();
 
 
 console.log($("#name").val().trim());
@@ -46,12 +46,12 @@ console.log($("#zipcode").val().trim());
         var eventPoster = $("<img>");
         //eventPoster.html(results[i].images[1].url);
         eventPoster.attr("src",results[i].images[1].url);
-        eventPoster.attr("width","200px");
+        eventPoster.attr("class","img-responsive");
         
         cardDiv.append(eventName);
-        cardDiv.append(eventPoster);
+        cardDiv.prepend(eventPoster);
 
-        $("#resultsPanel").append(cardDiv);
+        $("#deck").append(cardDiv);
                   
         }
 
@@ -64,7 +64,7 @@ console.log($("#zipcode").val().trim());
 $(".eventsBtn").on("click",function(){
 
   event.preventDefault();
-  $("#resultsPanel").empty();
+  $("#deck").empty();
 
   console.log($("#name").val().trim());
   console.log($("#zipcode").val().trim());
@@ -101,12 +101,12 @@ $(".eventsBtn").on("click",function(){
           var eventPoster = $("<img>");
           // eventPoster.html(results[i].images[1].url);
           eventPoster.attr("src",results[i].logo.url);
-          eventPoster.attr("width","200px");
+          eventPoster.attr("class","img-responsive");
           
           cardDiv.append(eventName);
-          cardDiv.append(eventPoster);
+          cardDiv.prepend(eventPoster);
 
-          $("#resultsPanel").append(cardDiv);
+          $("#deck").append(cardDiv);
                   
         }
     })
