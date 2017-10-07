@@ -38,14 +38,47 @@ body {
   background-color: #3f3e3e;
   opacity: 1.5;
   margin-right: 10px;
+  color: #f38a05;
 }
 
 .form-control {
   background-color: silver;
 }
 
- #deck div {
-  height: 200px;
+#resultsRow {
+  position: fixed;
 }
 
- }
+#resultsPanel {
+  opacity: .9;
+  background-color: #1a1d33;
+  border: none;
+}
+
+#resultsPanel > .panel-heading {
+  background-color: #3f3e3e;
+  opacity: 1.5;
+  color: #f38a05;
+  font-size: 20px !important;
+  border: none;
+}
+
+#resultsPanel .interest-btn {
+  margin-bottom: 5px;
+}
+
+#deck {
+  border-left: 2px solid darkgrey;
+  overflow-y: scroll;
+  height: 600px;
+}
+
+#deck div {
+  height: 200px;
+  color: #ddd;
+}
+
+#deck div img {
+  opacity: 1;
+}
+
