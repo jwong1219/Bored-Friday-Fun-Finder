@@ -20,7 +20,7 @@ function welcome(showing) {
 // console.log($("#welcomeModal"));
 var welcomeModal = false;
 $(window).on("load", function() {
-
+  console.log("animate.js says hello");
 //   setTimeout(welcome, 500);
 //   setTimeout(function() {
 //     $("#welcomeMessage").append("<br>Lets get started...")
@@ -33,6 +33,15 @@ $(window).on("load", function() {
   $("#launchModal").on("click", function() {
     welcome(welcomeModal);  
   });
+
+  $("#deck").on("click", ".contentCard", function() {
+    var card = $(this);
+    console.log(card);
+  })
+
+
+
+
 
 });
 

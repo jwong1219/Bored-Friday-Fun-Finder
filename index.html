@@ -36,27 +36,36 @@
 			</div>
 		</div>
 	</div>
+	<div id="resultsPanel" class="panel panel-default text-center">
+	  <div class="panel-heading">Here's what we found for you</div>
+	  <div class="panel-body">
+	    <div class="row">
+				<div class="col-xs-3"> <!-- for the re-search buttons -->
+					<button type = "submit" class="btn interest-btn entertainmentBtn">Entertainment</button>
+					<button type = "submit" class="btn interest-btn eventsBtn">Events</button>
+				</div>
+				<div class="col-xs-9"> <!--for the cards -->
+					<div class="row" id="deck">
 
-	<div class="row" id="resultsRow">
-		<div class="col-xs-8 col-xs-offset-2">
-			<div class="panel panel-default text-center" id="resultsPanel">
-			  <div class="panel-heading">Here's what we found for you</div>
-			  <div class="panel-body">
-			    <div class="row">
-						<div class="col-xs-3"> <!-- for the re-search buttons -->
-							<button type = "submit" class="btn interest-btn entertainmentBtn">Entertainment</button>
-							<button type = "submit" class="btn interest-btn eventsBtn">Events</button>
-						</div>
-						<div class="col-xs-9"> <!--for the cards -->
-							<div class="row" id="deck">
-
-							</div>
-						</div>
-			    </div>
-			  </div>
-			</div>
-		</div>
+					</div>
+				</div>
+	    </div>
+	  </div>
 	</div>
+	<div id="popover-content" class="hide">
+    <div class="panel panel-default">
+			<div class="panel-heading">Event Name</div>
+			<div class="panel-body">
+				Description:
+				Date:
+				Time:
+				<button type = "submit" class="btn" id="yes">Show me more!</button>
+				<button type = "submit" class="btn" id="no">No thanks...</button>
+
+			</div>
+    </div>
+  </div>
+		
 
 <script type="text/javascript" src="assets/javascript/logic.js"></script>
 <script type="text/javascript" src="assets/javascript/animate.js"></script>
