@@ -1,3 +1,21 @@
+//Firebase
+  
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyDYuGVMxvg0yfh_QlEp4by3sOKaUymg5dU",
+    authDomain: "bored-on-friday.firebaseapp.com",
+    databaseURL: "https://bored-on-friday.firebaseio.com",
+    projectId: "bored-on-friday",
+    storageBucket: "bored-on-friday.appspot.com",
+    messagingSenderId: "8099200900"
+};
+  firebase.initializeApp(config);
+
+  var database = firebase.database();
+  var name = "";
+  var zipcode = "";
+
+//ticket master
 $(".entertainmentBtn").on("click",function(event){
 
 
@@ -8,18 +26,17 @@ $("#deck").empty();
 console.log($("#name").val().trim());
 console.log($("#zipcode").val().trim());
 
-
-
   var Url = "https://app.ticketmaster.com/discovery/v2/events.json?&sort=date,asc&";
-
   var apikey = "&apikey=JRiceOsMrH7LY3ePHpJNLPjE1ZgeFGAD"
-  var zipcode = "&postalCode=" + $("#zipcode").val().trim();
-  var name = $("#name").val().trim();
+  zipcode = $("#zipcode").val().trim();
+  var zipcodeUrlPath = "&postalCode="; 
+  name = $("#name").val().trim();
   var size = "size=" + 12;
   var date = "&onsalesEndDateTime=" + moment().format("YYYY-MM-DD");
-  var queryUrl = Url + size + date + zipcode + apikey;
+  var queryUrl = Url + size + date + zipcodeUrlPath +zipcode + apikey;
   console.log(date);
   console.log(queryUrl);
+
 
 // Ajax call
   $.ajax({
@@ -67,11 +84,12 @@ $(".eventsBtn").on("click",function(){
 
   console.log($("#name").val().trim());
   console.log($("#zipcode").val().trim());
-
+  name = $("#name").val().trim();
   var url= "https://www.eventbriteapi.com/v3/events/search/?date_modified.keyword=today&";
-  var zipcode = "location.address=" + $("#zipcode").val().trim();
+  var zipcodeUrlPath = "location.address=";
+  zipcode = $("#zipcode").val().trim();
   var token = "&token=VHOSAZQCRGKLWAAH7UX2" 
-  var queryUrl = url + zipcode + token;
+  var queryUrl = url + zipcodeUrlPath+ zipcode + token;
   console.log(queryUrl);
 
   // Ajax call
@@ -93,6 +111,7 @@ $(".eventsBtn").on("click",function(){
           cardDiv.addClass("col-xs-4");        
           cardDiv.addClass("contentCard")
           cardDiv.attr("data-url",results[i].url);
+          cardDiv.attr("data-name",results[i].name.text);
           
           var eventName = $("<p>");
           eventName.html(results[i].name.text);
@@ -117,14 +136,45 @@ $(".eventsBtn").on("click",function(){
 //content
 function userSelectsCard() {
 
-  $(".contentCard").on("click", function(){
+    $(".contentCard").on("click", function(){
 
-  // FE to add modal styling & html
-  console.log("content card clicked");
-  //FE to grab URL of content card click & add to yes button
+    // FE to add modal styling & html
+    console.log("content card clicked");
+    //FE to grab URL of content card click & add to yes button
 
+
+    //var eventPoster = $(".eventPoster").data();
+    // console.log("eventPoster " + eventPoster);
+    // database.ref().push({
+    //    eventNameFB: eventName,
+    //    eventPosterFB: eventPoster
+    //   }); 
 
   }); //end  content card listeners
 
+
+    $("#yes").on("click", function() {
+
+      var eventName = $(".contentCard").data("name");
+      var eventPoster = $(".contentCard").data("url");
+      var newEvent = database.ref().push();
+
+      newEvent.set({
+        nameFB: name,
+        zipcodeFB: zipcode,
+        eventNameFB: eventName,
+        eventPosterFB: eventPoster
+      });
+
+
+    });
+
+
 }
+
+
+
+
+
+
 
