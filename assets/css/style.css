@@ -19,6 +19,7 @@ body {
   height: 37%;
   min-height: 337px;
   width: 70%;
+  max-width: 1020px;
   padding: 30px;
   padding-top: 13px;
   position: relative;
@@ -42,3 +43,9 @@ body {
 .form-control {
   background-color: silver;
 }
+
+ #deck div {
+  height: 200px;
+}
+
+ }
