@@ -2,6 +2,16 @@
   border-radius: 0 !important;
 }
 
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  overflow: auto;
+}
+
 body {
   background-image: url("../images/sf-skyline.jpeg");
   background-position-x: 42%;
@@ -38,14 +48,64 @@ body {
   background-color: #3f3e3e;
   opacity: 1.5;
   margin-right: 10px;
+  color: #f38a05;
 }
 
 .form-control {
   background-color: silver;
 }
 
- #deck div {
-  height: 200px;
+/*#resultsRow {
+  position: fixed;
+}*/
+
+#resultsPanel {
+  opacity: .9;
+  background-color: #1a1d33;
+  border: none;
 }
 
- }
+#resultsPanel > .panel-heading {
+  background-color: #3f3e3e;
+  opacity: 1.5;
+  color: #f38a05;
+  font-size: 20px !important;
+  border: none;
+}
+
+#resultsPanel .interest-btn {
+  margin-bottom: 5px;
+}
+
+#deck {
+  border-left: 2px solid darkgrey;
+  overflow-y: scroll;
+  height: 600px;
+}
+
+#deck div {
+  height: 200px;
+  color: #ddd;
+  cursor: pointer;
+}
+
+#deck div {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px transparent;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+#deck div:hover, .hvr-grow:focus, .hvr-grow:active {
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
+}
+
+#deck div img {
+  opacity: 1;
+}
+
