@@ -4,21 +4,22 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" crossorigin="anonymous">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 	<link rel="stylesheet" href="assets/css/style.css">
 
-	<title></title>
+	<title>Friday Fun Finder</title>
 </head>
 
 <body>
  
 	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#welcomeModal">
 	 Launch demo modal </button>					<!-- Button Issue -->
-	<div id="welcomeModal" class="modal" data-show="true">			<!-- Modal not showing -->
+	<div id="welcomeModal" class="modal fade" data-show="true">			<!-- Modal not showing -->
 		<div class="modal-content">											<!-- 12:10pm Modal working -->
-			<div class="modal-header text-center">
-				Are you bored on a Friday night? Welcome to Friday Fun Finder!
+			<div class="modal-header text-center" id="welcomeMessage">
+				Looking for something to do? Welcome to your Friday night.
 			</div>
-			<div class="modal-body">
+			<div class="modal-body invisible" id="welcomeModalBody">
 				<form>
 					<div class="form-group">
 						<label for = "name">Name</label>
@@ -37,7 +38,7 @@
 
 
 
-<script type="text/javascript" src="assets/javascript/script.js"></script>
-<script type="text/javascript" src="assets/javascript/test.js"></script>
+<script type="text/javascript" src="assets/javascript/logic.js"></script>
+<script type="text/javascript" src="assets/javascript/animate.js"></script>
 </body>
 </html>
