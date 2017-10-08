@@ -51,7 +51,19 @@ $(".entertainmentBtn").on("click",function(event){
           var cardDiv = $("<div>");
           cardDiv.addClass("col-xs-4");
           cardDiv.addClass("contentCard");
+          
+          cardDiv.attr("data-description",results[i].info);
+          cardDiv.attr("data-date", results[i].dates.start.localDate);
+          var localTime = results[i].dates.start.localTime;
+          cardDiv.attr("data-time", moment(localTime, 'HH:mm').format('hh:mm a'));
           cardDiv.attr("data-url",results[i].url);
+          cardDiv.attr("data-placement","bottom");
+          cardDiv.attr("data-toggle","popover");
+            
+
+          console.log(localTime);
+           console.log(moment(localTime, 'HH:mm').format('hh:mm a'));
+
           var eventName = $("<p>");
           eventName.html(results[i].name);
           
