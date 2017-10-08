@@ -2,6 +2,10 @@
   border-radius: 0 !important;
 }
 
+::-webkit-scrollbar { 
+  display: none; 
+}
+
 html {
   overflow: hidden;
   height: 100%;
@@ -81,6 +85,11 @@ body {
   border-left: 2px solid darkgrey;
   overflow-y: scroll;
   height: 600px;
+  overflow-x: hidden;
+}
+
+#deck::-webkit-scrollbar { 
+  width: 2px; 
 }
 
 #deck div {
@@ -89,7 +98,7 @@ body {
   cursor: pointer;
 }
 
-#deck div {
+#deck > div {
   display: inline-block;
   vertical-align: middle;
   -webkit-transform: perspective(1px) translateZ(0);
@@ -100,7 +109,7 @@ body {
   -webkit-transition-property: transform;
   transition-property: transform;
 }
-#deck div:hover, .hvr-grow:focus, .hvr-grow:active {
+#deck > div:hover, #deck > div:focus, #deck > div:active {
   -webkit-transform: scale(1.05);
   transform: scale(1.05);
 }
