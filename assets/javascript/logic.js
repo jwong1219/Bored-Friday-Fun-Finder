@@ -2,12 +2,12 @@
   
 // Initialize Firebase
 var config = {
-    apiKey: "AIzaSyDYuGVMxvg0yfh_QlEp4by3sOKaUymg5dU",
-    authDomain: "bored-on-friday.firebaseapp.com",
-    databaseURL: "https://bored-on-friday.firebaseio.com",
-    projectId: "bored-on-friday",
-    storageBucket: "bored-on-friday.appspot.com",
-    messagingSenderId: "8099200900"
+  apiKey: "AIzaSyDYuGVMxvg0yfh_QlEp4by3sOKaUymg5dU",
+  authDomain: "bored-on-friday.firebaseapp.com",
+  databaseURL: "https://bored-on-friday.firebaseio.com",
+  projectId: "bored-on-friday",
+  storageBucket: "bored-on-friday.appspot.com",
+  messagingSenderId: "8099200900"
 };
   firebase.initializeApp(config);
 
@@ -17,14 +17,11 @@ var config = {
 
 //ticket master
 $(".entertainmentBtn").on("click",function(event){
+  event.preventDefault();
+  $("#deck").empty();
 
-
-event.preventDefault();
-$("#deck").empty();
-
-
-console.log($("#name").val().trim());
-console.log($("#zipcode").val().trim());
+  console.log($("#name").val().trim());
+  console.log($("#zipcode").val().trim());
 
   var Url = "https://app.ticketmaster.com/discovery/v2/events.json?&sort=date,asc&";
   var apikey = "&apikey=JRiceOsMrH7LY3ePHpJNLPjE1ZgeFGAD"
@@ -36,7 +33,6 @@ console.log($("#zipcode").val().trim());
   var queryUrl = Url + size + date + zipcodeUrlPath +zipcode + apikey;
   console.log(date);
   console.log(queryUrl);
-
 
 // Ajax call
   $.ajax({
@@ -71,6 +67,7 @@ console.log($("#zipcode").val().trim());
         $("#deck").append(cardDiv);
                   
         }
+
       userSelectsCard();
       })
 }); //End Ticket Master Button Listener
@@ -94,54 +91,64 @@ $(".eventsBtn").on("click",function(){
 
   // Ajax call
   $.ajax({
-          url: queryUrl,
-          method: "GET"
-        }).done(function(response) {
+    url: queryUrl,
+    method: "GET"
+  }).done(function(response) {
         
-        console.log(response);
+    console.log(response);
 
-        var results = response.events;
-        console.log(results);      
+    var results = response.events;
+    console.log(results);      
 
 //iterate all events 
 
-        for(var i = 0;i < 12; i++){
+    for(var i = 0;i < 12; i++){
 
-          var cardDiv = $("<div>");
-          cardDiv.addClass("col-xs-4");        
-          cardDiv.addClass("contentCard");
-          cardDiv.attr("data-url",results[i].url);
-          cardDiv.attr("data-name",results[i].name.text);
-          cardDiv.attr("data-description", results[i].description.text);
-          cardDiv.attr("data-placement","right");
-          cardDiv.attr("data-toggle","popover");
-          
+      var cardDiv = $("<div>");
+      cardDiv.addClass("col-xs-4");        
+      cardDiv.addClass("contentCard");
+      cardDiv.attr("data-url",results[i].url);
+      cardDiv.attr("data-name",results[i].name.text);
+      cardDiv.attr("data-description", results[i].description.text);
+      cardDiv.attr("data-placement","bottom");
+      cardDiv.attr("data-title",results[i].name.text);
+      cardDiv.attr("data-toggle","popover");
+      
 
-          //attribute for data-date
-          var localTime = results[i].start.local;
-          console.log(localTime.split("T"));
-          var dateSplit = localTime.split("T");
-          var dateArray = dateSplit[0];
-          // localTime.split("T")
-          cardDiv.attr("data-date",dateArray);
-          //attribute for data-time
-          var timeArray = dateSplit[1];
-          cardDiv.attr("date-time", timeArray);
+      //attribute for data-date
+      var localTime = results[i].start.local;
+      console.log(localTime.split("T"));
+      var dateSplit = localTime.split("T");
+      var dateArray = dateSplit[0];
+      // localTime.split("T")
+      cardDiv.attr("data-date",dateArray);
+      //attribute for data-time
+      var timeArray = dateSplit[1];
+      cardDiv.attr("date-time", timeArray);
 
-          var eventName = $("<p>");
-          eventName.html(results[i].name.text);
-          
-          var eventPoster = $("<img>");
-          // eventPoster.html(results[i].images[1].url);
-          eventPoster.attr("src",results[i].logo.url);
-          eventPoster.attr("class","img-responsive");
-          
-          cardDiv.append(eventName);
-          cardDiv.prepend(eventPoster);
+      var eventName = $("<p>");
+      eventName.html(results[i].name.text);
+      
+      var eventPoster = $("<img>");
+      // eventPoster.html(results[i].images[1].url);
+      eventPoster.attr("src",results[i].logo.url);
+      eventPoster.attr("class","img-responsive");
+      
+      cardDiv.append(eventName);
+      cardDiv.prepend(eventPoster);
 
-          $("#deck").append(cardDiv);
-                  
-        }
+      $("#deck").append(cardDiv);
+              
+    }
+    //added by JWong for experimenting... don't mind me....
+    $("[data-toggle=popover]").popover({
+      html: true,
+      content: function() {
+        console.log("hello I am popover");
+        return $("#popover-content").html();
+      } 
+    });
+    //end of JWong's scheming
     //calls content card listener
     userSelectsCard();
     })
