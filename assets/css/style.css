@@ -92,8 +92,8 @@ body {
   width: 2px; 
 }
 
-#deck div {
-  height: 200px;
+#deck > div {
+  height: 40%;
   color: #ddd;
   cursor: pointer;
 }
@@ -116,5 +116,9 @@ body {
 
 #deck div img {
   opacity: 1;
+}
+
+.popover{
+  color: black !important;
 }
 
