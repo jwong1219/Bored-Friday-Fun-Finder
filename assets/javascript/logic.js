@@ -9,27 +9,27 @@ var config = {
     storageBucket: "bored-on-friday.appspot.com",
     messagingSenderId: "8099200900"
 };
-  firebase.initializeApp(config);
+    firebase.initializeApp(config);
 
-  var database = firebase.database();
-  var name = "";
-  var zipcode = "";
+    var database = firebase.database();
+    var name = "";
+    var zipcode = "";
 
 //ticket master
 $(".entertainmentBtn").on("click",function(event){
 
 
-event.preventDefault();
-$("#deck").empty();
+  event.preventDefault();
+  $("#deck").empty();
 
 
-console.log($("#name").val().trim());
-console.log($("#zipcode").val().trim());
+  // console.log($("#name").val().trim());
+  // console.log($("#zipcode").val().trim());
 
   var Url = "https://app.ticketmaster.com/discovery/v2/events.json?&sort=date,asc&";
   var apikey = "&apikey=JRiceOsMrH7LY3ePHpJNLPjE1ZgeFGAD"
-  zipcode = $("#zipcode").val().trim();
   var zipcodeUrlPath = "&postalCode="; 
+  zipcode = $("#zipcode").val().trim();
   name = $("#name").val().trim();
   var size = "size=" + 12;
   var date = "&onsalesEndDateTime=" + moment().format("YYYY-MM-DD");
@@ -45,7 +45,6 @@ console.log($("#zipcode").val().trim());
     }).done(function(response) {
         
         console.log(response);
-
         var results = response._embedded.events;
         console.log(results);      
 
@@ -53,25 +52,25 @@ console.log($("#zipcode").val().trim());
 
         for(var i = 0;i < results.length; i++){
 
-        var cardDiv = $("<div>");
-        cardDiv.addClass("col-xs-4");
-        cardDiv.addClass("contentCard");
-        cardDiv.attr("data-url",results[i].url);
-        var eventName = $("<p>");
-        eventName.html(results[i].name);
-        
-        var eventPoster = $("<img>");
-        //eventPoster.html(results[i].images[1].url);
-        eventPoster.attr("src",results[i].images[1].url);
-        eventPoster.attr("class","img-responsive");
-        
-        cardDiv.append(eventName);
-        cardDiv.prepend(eventPoster);
+          var cardDiv = $("<div>");
+          cardDiv.addClass("col-xs-4");
+          cardDiv.addClass("contentCard");
+          cardDiv.attr("data-url",results[i].url);
+          var eventName = $("<p>");
+          eventName.html(results[i].name);
+          
+          var eventPoster = $("<img>");
+          //eventPoster.html(results[i].images[1].url);
+          eventPoster.attr("src",results[i].images[1].url);
+          eventPoster.attr("class","img-responsive");
+          
+          cardDiv.append(eventName);
+          cardDiv.prepend(eventPoster);
 
-        $("#deck").append(cardDiv);
+          $("#deck").append(cardDiv);
                   
         }
-      userSelectsCard();
+          userSelectsCard();
       })
 }); //End Ticket Master Button Listener
 
@@ -79,9 +78,9 @@ console.log($("#zipcode").val().trim());
 //EventBrite
 $(".eventsBtn").on("click",function(){
 
-  event.preventDefault();
-  $("#deck").empty();
-
+    event.preventDefault();
+    $("#deck").empty();
+    
     console.log($("#name").val().trim());
     console.log($("#zipcode").val().trim());
     name = $("#name").val().trim();
@@ -108,38 +107,36 @@ $(".eventsBtn").on("click",function(){
         for(var i = 0;i < 12; i++){
 
           var cardDiv = $("<div>");
-          cardDiv.addClass("col-xs-4");        
-          cardDiv.addClass("contentCard");
-          cardDiv.attr("data-url",results[i].url);
-          cardDiv.attr("data-name",results[i].name.text);
-          cardDiv.attr("data-description", results[i].description.text);
-          cardDiv.attr("data-placement","right");
-          cardDiv.attr("data-toggle","popover");
-          
+            cardDiv.addClass("col-xs-4");        
+            cardDiv.addClass("contentCard");
+            cardDiv.attr("data-url",results[i].url);
+            cardDiv.attr("data-name",results[i].name.text);
+            cardDiv.attr("data-description", results[i].description.text);
+            cardDiv.attr("data-placement","right");
+            cardDiv.attr("data-toggle","popover");
+            
 
           //attribute for data-date
-          var localTime = results[i].start.local;
-          console.log(localTime.split("T"));
-          var dateSplit = localTime.split("T");
-          var dateArray = dateSplit[0];
+            var localTime = results[i].start.local;
+            console.log(localTime.split("T"));
+            var dateSplit = localTime.split("T");
+            var dateArray = dateSplit[0];
           // localTime.split("T")
-          cardDiv.attr("data-date",dateArray);
-          //attribute for data-time
-          var timeArray = dateSplit[1];
-          cardDiv.attr("date-time", timeArray);
-
-          var eventName = $("<p>");
-          eventName.html(results[i].name.text);
-          
-          var eventPoster = $("<img>");
+            cardDiv.attr("data-date",dateArray);
+            //attribute for data-time
+            var timeArray = dateSplit[1];
+            cardDiv.attr("date-time", timeArray);
+            var eventName = $("<p>");
+            eventName.html(results[i].name.text);
+            var eventPoster = $("<img>");
           // eventPoster.html(results[i].images[1].url);
-          eventPoster.attr("src",results[i].logo.url);
-          eventPoster.attr("class","img-responsive");
+            eventPoster.attr("src",results[i].logo.url);
+            eventPoster.attr("class","img-responsive");
           
-          cardDiv.append(eventName);
-          cardDiv.prepend(eventPoster);
+            cardDiv.append(eventName);
+            cardDiv.prepend(eventPoster);
 
-          $("#deck").append(cardDiv);
+            $("#deck").append(cardDiv);
                   
         }
     //calls content card listener
@@ -167,6 +164,7 @@ function userSelectsCard() {
 
   }); //end  content card listeners
 
+}
 
     $("#yes").on("click", function() {
 
@@ -174,20 +172,13 @@ function userSelectsCard() {
         var eventPoster = $(".contentCard").data("url");
         var newEvent = database.ref().push();
 
-      newEvent.set({
-        nameFB: name,
-        zipcodeFB: zipcode,
-        eventNameFB: eventName,
-        eventPosterFB: eventPoster
-      });
+        newEvent.set({
+          nameFB: name,
+          zipcodeFB: zipcode,
+          eventNameFB: eventName,
+          eventPosterFB: eventPoster
+        });
 
 
     }); //end yes button listeners
-}
-
-
-
-
-
-
 
