@@ -36,10 +36,24 @@ $(window).on("load", function() {
 
   $("#deck").on("click", ".contentCard", function() {
     var card = $(this);
+    // $("[data-toggle=popover]").popover({
+    //   html: true,
+    //   content: function() {
+    //     console.log("hello I am popover");
+    //     return $("#popover-content").html();
+    //   }
+    // });
     console.log(card);
   })
 
+  // $("[data-toggle=popover]").popover({
+  //   html: true,
+  //   content: function() {
+  //     console.log("hello I am popover");
+  //     return $("#popover-content").html();
+  //   }
 
+  // });
 
 
 
