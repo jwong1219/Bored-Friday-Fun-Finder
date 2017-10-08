@@ -17,6 +17,7 @@ var config = {
 
 //ticket master
 $(".entertainmentBtn").on("click",function(event){
+  
   event.preventDefault();
   $("#deck").empty();
 
@@ -51,7 +52,18 @@ $(".entertainmentBtn").on("click",function(event){
           var cardDiv = $("<div>");
           cardDiv.addClass("col-xs-4");
           cardDiv.addClass("contentCard");
+          cardDiv.attr("data-name", results[i].name);
+          cardDiv.attr("data-description",results[i].info);
+          cardDiv.attr("data-date", results[i].dates.start.localDate);
+          var localTime = results[i].dates.start.localTime;
+          cardDiv.attr("data-time", moment(localTime, 'HH:mm').format('hh:mm a'));
           cardDiv.attr("data-url",results[i].url);
+          cardDiv.attr("data-placement","bottom");
+          cardDiv.attr("data-toggle","popover");
+
+          console.log(localTime);
+           console.log(moment(localTime, 'HH:mm').format('hh:mm a'));
+
           var eventName = $("<p>");
           eventName.html(results[i].name);
           
@@ -59,6 +71,7 @@ $(".entertainmentBtn").on("click",function(event){
           //eventPoster.html(results[i].images[1].url);
           eventPoster.attr("src",results[i].images[1].url);
           eventPoster.attr("class","img-responsive");
+          cardDiv.attr("data-image",results[i].images[1].url);
           
           cardDiv.append(eventName);
           cardDiv.prepend(eventPoster);
@@ -128,9 +141,10 @@ $(".eventsBtn").on("click",function(){
       eventName.html(results[i].name.text);
       
       var eventPoster = $("<img>");
+      cardDiv.attr("data-image", results[i].logo.url);
       // eventPoster.html(results[i].images[1].url);
       eventPoster.attr("src",results[i].logo.url);
-      eventPoster.attr("class","img-responsive");
+      //eventPoster.attr("class","img-responsive");
       
       cardDiv.append(eventName);
       cardDiv.prepend(eventPoster);
@@ -139,13 +153,13 @@ $(".eventsBtn").on("click",function(){
               
     }
     //added by JWong for experimenting... don't mind me....
-    $("[data-toggle=popover]").popover({
-      html: true,
-      content: function() {
-        console.log("hello I am popover");
-        return $("#popover-content").html();
-      } 
-    });
+    // $("[data-toggle=popover]").popover({
+    //   html: true,
+    //   content: function() {
+    //     console.log("hello I am popover");
+    //     return $("#popover-content").html();
+    //   } 
+    // });
     //end of JWong's scheming
 
     //calls content card listener
@@ -174,12 +188,15 @@ function userSelectsCard() {
   }); //end  content card listeners
 
 }
-
-    $("#yes").on("click", function() {
+      $("#yes").on("click", function() {
 
         var eventName = $(".contentCard").data("name");
-        var eventPoster = $(".contentCard").data("url");
+        var eventPoster = $(".contentCard").data("image");
         var newEvent = database.ref().push();
+
+        console.log("event name" + eventName);
+        console.log("event poster" + eventPoster);
+        console.log("new Event" + newEvent);
 
         newEvent.set({
           nameFB: name,
@@ -191,3 +208,28 @@ function userSelectsCard() {
 
     }); //end yes button listeners
 
+database.ref().on("child_added", function(childSnapShot) {
+
+  console.log(childSnapShot.val());
+
+  var bannerName = childSnapShot.val().nameFB;
+  var bannerEventName = childSnapShot.val().eventNameFB;
+  var bannerEventPoster = childSnapShot.val().eventPosterFB;
+
+  console.log(bannerName);
+  console.log(bannerEventPoster);
+  console.log(bannerEventName);
+
+  var bannerInnerDiv = $("<div>");
+  bannerInnerDiv.attr("src", bannerEventPoster);
+  var bannerInnerP = $("<p>");
+  bannerInnerP.html(bannerName);
+  var bannerInnerImg = $("<img>");
+  bannerInnerImg.attr("src",bannerEventPoster);
+
+  bannerInnerDiv.append(bannerInnerP);
+  bannerInnerDiv.append(bannerInnerImg);
+
+  $("#banner").append(bannerInnerDiv);
+
+});
