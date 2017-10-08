@@ -36,7 +36,12 @@ $(window).on("load", function() {
 
   $("#deck").on("click", ".contentCard", function() {
     var card = $(this);
-    // $("[data-toggle=popover]").popover({
+    $("#eventData").empty();
+    $("#eventData").append("Date: " + card.attr('data-date')+"<br>");
+    $("#eventData").append("Time: " + card.attr('date-time')+"<br>");
+    $("#eventData").append("Description: " + card.attr('data-description')+"<br>");
+
+    // $(this).popover({
     //   html: true,
     //   content: function() {
     //     console.log("hello I am popover");
