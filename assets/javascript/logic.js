@@ -9,11 +9,79 @@ var config = {
   storageBucket: "bored-on-friday.appspot.com",
   messagingSenderId: "8099200900"
 };
-    firebase.initializeApp(config);
+firebase.initializeApp(config);
 
-    var database = firebase.database();
-    var name = "";
-    var zipcode = "";
+var database = firebase.database();
+var name = "";
+var zipcode = "";
+
+function welcome(showing) {
+  if(showing === false) {
+    $("#welcomeModal").modal({"show": "true", /*"backdrop": "static"*/});
+    setTimeout(function() {
+      $("#welcomeMessage").append("<br>Lets get started...")
+    },0);
+    setTimeout(function() {
+      $("#welcomeModalBody").removeClass("invisible")
+    },0);
+    welcomeModal = true;
+
+  }
+  else {
+    $("#welcomeModal").modal("show", "false");
+    welcomeModal = false;
+  }
+}
+
+// console.log($("#welcomeModal"));
+var welcomeModal = false;
+$(window).on("load", function() {
+  console.log("animate.js says hello");
+//   setTimeout(welcome, 500);
+//   setTimeout(function() {
+//     $("#welcomeMessage").append("<br>Lets get started...")
+//   },2500);
+//   setTimeout(function() {
+//     $("#welcomeModalBody").removeClass("invisible")
+//   },4000);
+// });
+
+$("#launchModal").on("click", function() {
+    welcome(welcomeModal);  
+  });
+
+  $("#deck").on("click", ".contentCard", function() {
+    var card = $(this);
+    console.log(card);
+    var pop = $("#popover-temp").find('.popover').eq(0);
+    pop.attr('data-name', card.attr('data-name'));
+    pop.attr('data-image', card.attr('data-image'));
+    pop.attr('data-url', card.attr('data-url'));
+    console.log(pop);
+    var popTemp = $("#popover-temp").html();
+    console.log(popTemp);
+    var popContent = $("<div>");
+    popContent.empty();
+    popContent.append("Date: " + card.attr('data-date')+"<br>");
+    popContent.append("Time: " + card.attr('date-time')+"<br>");
+    popContent.append("Description: " + card.attr('data-description')+"<br>");
+    
+    console.log({popContent});
+    $(this).popover({
+      html: true,
+      // template: ($("#popover-temp").find('.popover')[0]),
+      template: popTemp,
+      content: function() {
+        console.log("hello I am popover");
+        return popContent.html();
+      },
+    });
+
+    $(this).popover("toggle");
+    // console.log(card);
+    
+  })
+});
 
 //ticket master
 $(".entertainmentBtn").on("click",function(event){
@@ -32,55 +100,58 @@ $(".entertainmentBtn").on("click",function(event){
   var size = "size=" + 12;
   var date = "&onsalesEndDateTime=" + moment().format("YYYY-MM-DD");
   var queryUrl = Url + size + date + zipcodeUrlPath +zipcode + apikey;
-  console.log(date);
-  console.log(queryUrl);
+  // console.log(date);
+  // console.log(queryUrl);
 
 // Ajax call
   $.ajax({
       url: queryUrl,
       method: "GET"
-    }).done(function(response) {
-        
-        console.log(response);
-        var results = response._embedded.events;
-        console.log(results);      
+  }).done(function(response) {
+      
+    // console.log(response);
+    var results = response._embedded.events;
+    // console.log(results);      
 
 //iterate all events 
 
-        for(var i = 0;i < results.length; i++){
+    for(var i = 0;i < results.length; i++){
 
-          var cardDiv = $("<div>");
-          cardDiv.addClass("col-xs-4");
-          cardDiv.addClass("contentCard");
-          cardDiv.attr("data-name", results[i].name);
-          cardDiv.attr("data-description",results[i].info);
-          cardDiv.attr("data-date", results[i].dates.start.localDate);
-          var localTime = results[i].dates.start.localTime;
-          cardDiv.attr("data-time", moment(localTime, 'HH:mm').format('hh:mm a'));
-          cardDiv.attr("data-url",results[i].url);
-          cardDiv.attr("data-placement","bottom");
-          cardDiv.attr("data-toggle","popover");
+      var cardDiv = $("<div>");
+      cardDiv.addClass("col-xs-4");
+      cardDiv.addClass("contentCard");
+      cardDiv.attr("data-name", results[i].name);
+      cardDiv.attr("data-title",results[i].name.text);
+      cardDiv.attr("data-description",results[i].info);
+      cardDiv.attr("data-date", results[i].dates.start.localDate);
+      var localTime = results[i].dates.start.localTime;
+      cardDiv.attr("data-time", moment(localTime, 'HH:mm').format('hh:mm a'));
+      cardDiv.attr("data-url",results[i].url);
+      cardDiv.attr("data-placement","auto right");
+      cardDiv.attr("data-toggle","popover");
+      // added by JWong
+      cardDiv.attr("data-trigger", "manual");
 
-          console.log(localTime);
-           console.log(moment(localTime, 'HH:mm').format('hh:mm a'));
+      // console.log(localTime);
+      // console.log(moment(localTime, 'HH:mm').format('hh:mm a'));
 
-          var eventName = $("<p>");
-          eventName.html(results[i].name);
-          
-          var eventPoster = $("<img>");
-          //eventPoster.html(results[i].images[1].url);
-          eventPoster.attr("src",results[i].images[1].url);
-          eventPoster.attr("class","img-responsive");
-          cardDiv.attr("data-image",results[i].images[1].url);
-          
-          cardDiv.append(eventName);
-          cardDiv.prepend(eventPoster);
+      var eventName = $("<p>");
+      eventName.html(results[i].name);
+      
+      var eventPoster = $("<img>");
+      //eventPoster.html(results[i].images[1].url);
+      eventPoster.attr("src",results[i].images[1].url);
+      eventPoster.attr("class","img-responsive");
+      cardDiv.attr("data-image",results[i].images[1].url);
+      
+      cardDiv.append(eventName);
+      cardDiv.prepend(eventPoster);
 
-          $("#deck").append(cardDiv);
-                  
-        }
-        userSelectsCard();
-      })
+      $("#deck").append(cardDiv);
+              
+    }
+    userSelectsCard();
+  })
 }); //End Ticket Master Button Listener
 
 
@@ -121,7 +192,7 @@ $(".eventsBtn").on("click",function(){
       cardDiv.attr("data-url",results[i].url);
       cardDiv.attr("data-name",results[i].name.text);
       cardDiv.attr("data-description", results[i].description.text);
-      cardDiv.attr("data-placement","bottom");
+      cardDiv.attr("data-placement","auto right");
       cardDiv.attr("data-title",results[i].name.text);
       cardDiv.attr("data-toggle","popover");
       // added by JWong
@@ -190,7 +261,7 @@ function userSelectsCard() {
   }); //end  content card listeners
 
 }
-$(".yes").on("click", function() {
+$("#deck").on("click", ".yes", function() {
   var thisDiv = $(this);
   console.log(thisDiv);
   var eventName = $(".contentCard").data("name");

@@ -112,7 +112,7 @@ body {
 }
 
 #deck > div {
-  height: 40%;
+  height: 50%;
   color: #ddd;
   cursor: pointer;
 }
