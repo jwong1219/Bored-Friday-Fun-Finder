@@ -224,4 +224,44 @@ body {
 .bannerCardContent p {
   color: white;
 }
+  
+/*Media Queries*/
 
+
+@media screen and (max-width:980px) {
+
+
+  body { 
+    font-size: .9em;
+  }
+
+  #slider img {
+    width:200px;
+    height:100px;
+  }
+  
+  .popover-content {
+    font-size: .7em;
+  }
+
+  .popover-footer a {
+    font-size: .9em;
+  }
+
+  .btn {
+  width:100%;
+}
+
+}
+
+
+@media screen and (max-width:768px) {
+
+
+
+
+}
+
+@media screen and (max-width:640px) {
+
+}
