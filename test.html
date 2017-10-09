@@ -26,11 +26,11 @@
      <form>
         <div class="form-group">
           <label for="name">Name</label>
-          <input type="text" class="form-control" id="name" placeholder="name">
+          <input type="text" class="form-control" id="name" placeholder="name" required>
         </div>
         <div class="form-group">
           <label for="zipcode">zipcode</label>
-          <input type="number" class="form-control" id="zipcode" placeholder="please enter zipcode">
+          <input type="number" class="form-control" id="zipcode" placeholder="please enter zipcode" pattern="[0-9]{5}" required>
         </div>
         <button type="submit" class="btn btn-default entertainmentBtn">Entertainment</button>
         <button type="submit" class="btn btn-default eventsBtn">Events</button>

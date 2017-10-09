@@ -239,3 +239,35 @@ database.ref().on("child_added", function(childSnapShot) {
   $("#banner").append(bannerInnerDiv);
 
 });
+
+$("#zipcode").focusout(function(){
+  var zipcode =$(this).val();
+  galoreUrl = "http://api.zippopotam.us/us/";
+
+  var queryUrl = galoreUrl + zipcode;
+  console.log(queryUrl);
+
+  $.ajax ({
+    url: queryUrl,
+    method: "GET"
+  }).done(function(response){
+
+    console.log(response);
+
+    if (Object.keys(response).length === 0){
+      console.log("not a good zipcode")
+    }
+    else {
+      console.log(response + "this is good");
+    }
+
+})
+
+});
+
+
+
+
+
+
+
