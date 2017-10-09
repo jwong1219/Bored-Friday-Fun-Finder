@@ -158,20 +158,40 @@ body {
     left: 0;
   }
 
+  5% {
+    left: -5%;
+  }
+
   10% {
     left: -10%;
+  }
+
+  15% {
+    left: -15%;
   }
 
   20% {
     left: -20%;
   }
 
+  25% {
+    left: -25%;
+  }
+
   30% {
     left: -30%;
   }
 
+  35% {
+    left: -35%;
+  }
+
   40% {
     left: -40%;
+  }
+
+  45% {
+    left: -45%;
   }
 
   50% {
@@ -179,55 +199,76 @@ body {
   }
 
   60%{
-    left: -200%;
+    left: -60%;
+  }
+
+  5% {
+    left: -5%;
   }
 
   70% {
-    left: -200%;
+    left: -70%;
+  }
+
+  75% {
+    left: -75%;
   }
 
   80% {
-    left: -300%;
+    left: -80%;
+  }
+
+  85% {
+    left: -85%;
   }
 
   90% {
-    left: -300%;
+    left: -90%;
+  }
+
+  95% {
+    left: -95%;
   }
 
   100% {
-    left: -400%;
+    left: -100%;
   }
 }
+
 
 /*css below is for banner*/
 #slider {
   overflow: hidden;
+  position: relative;
 }
 
 #slider figure div {
   width: 20%;
-  float: left;
+  float: right;
 }
 
 #slider figure {
   position: relative;
-  width: 500%;
-  margin: 0;
+  width: 100%;
+  margin: 5px;
   left: 0; 
   text-align: center;
   font-size: 15px;
-  animation: 10s slider infinite;
+  animation: 1s slider infinite;
 }
 
 .bannerCardContent{
   background-color: opacity: .5;
   display: inline-block;
+  float: right;
+
 
 }
 
 .bannerCardContent p {
   color: white;
 }
+
 
 /*Media Queries*/
 @media screen and (max-width:980px) {
@@ -252,6 +293,7 @@ body {
 @media screen and (max-width:768px) {
 }
 @media screen and (max-width:640px) {
+
 #slider img {
   width: 300px;
   height: 150px;
