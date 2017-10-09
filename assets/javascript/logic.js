@@ -124,6 +124,8 @@ $(".eventsBtn").on("click",function(){
       cardDiv.attr("data-placement","bottom");
       cardDiv.attr("data-title",results[i].name.text);
       cardDiv.attr("data-toggle","popover");
+      // added by JWong
+      cardDiv.attr("data-trigger", "manual");
       
 
       //attribute for data-date
