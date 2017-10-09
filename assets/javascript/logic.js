@@ -221,11 +221,15 @@ database.ref().on("child_added", function(childSnapShot) {
   console.log(bannerEventName);
 
   var bannerInnerDiv = $("<div>");
+  // For the banner-josh
+  bannerInnerDiv.addClass("bannerCardContent");
   bannerInnerDiv.attr("src", bannerEventPoster);
   var bannerInnerP = $("<p>");
   bannerInnerP.html(bannerName);
   var bannerInnerImg = $("<img>");
   bannerInnerImg.attr("src",bannerEventPoster);
+  // Josh addition
+  bannerInnerImg.attr("width", "300px");
 
   bannerInnerDiv.append(bannerInnerP);
   bannerInnerDiv.append(bannerInnerImg);
