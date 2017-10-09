@@ -36,15 +36,14 @@ function welcome(showing) {
 // console.log($("#welcomeModal"));
 var welcomeModal = false;
 $(window).on("load", function() {
-  console.log("animate.js says hello");
-//   setTimeout(welcome, 500);
-//   setTimeout(function() {
-//     $("#welcomeMessage").append("<br>Lets get started...")
-//   },2500);
-//   setTimeout(function() {
-//     $("#welcomeModalBody").removeClass("invisible")
-//   },4000);
-// });
+  // setTimeout(welcome, 500);
+  // setTimeout(function() {
+  //   $("#welcomeMessage").append("<br>Lets get started...")
+  // },2500);
+  // setTimeout(function() {
+  //   $("#welcomeModalBody").removeClass("invisible")
+  // },4000);
+
 
 $("#launchModal").on("click", function() {
     welcome(welcomeModal);  
@@ -319,7 +318,7 @@ database.ref().on("child_added", function(childSnapShot) {
 
   bannerInnerDiv.append(bannerInnerP);
   bannerInnerDiv.append(bannerInnerLink);
-  bannerInnerDiv.append(bannerInnerImg);
+  bannerInnerLink.append(bannerInnerImg);
 
   $("#banner").append(bannerInnerDiv);
 
@@ -338,15 +337,25 @@ $("#zipcode").focusout(function(){
   }).done(function(response){
 
     console.log(response);
+    $("#welcomeModalBody").children('button').removeClass("disabled");
+    // if (Object.keys(response).length === 0){
+    //   console.log("not a good zipcode")
+    // }
+    // else {
+    //   console.log(response + "this is good");
+    // }
+    console.log("good zip code");
 
-    if (Object.keys(response).length === 0){
-      console.log("not a good zipcode")
-    }
-    else {
-      console.log(response + "this is good");
-    }
+  }).fail(function(response) {
 
-})
+    console.log("bad zip");
+    $("#zipcode").addClass('animated shake')
+    .one('webkitAnimationEnd oanimationend animationend', function() {
+      $("#zipcode").removeClass('animated shake');
+    });
+    $("#welcomeModalBody").children('.interest-btn').addClass("disabled");
+    console.log($("#welcomeModalBody").children('button'));
+  })
 
 });
 
