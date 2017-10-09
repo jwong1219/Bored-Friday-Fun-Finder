@@ -36,18 +36,28 @@ $(window).on("load", function() {
 
   $("#deck").on("click", ".contentCard", function() {
     var card = $(this);
-    $("#eventData").empty();
-    $("#eventData").append("Date: " + card.attr('data-date')+"<br>");
-    $("#eventData").append("Time: " + card.attr('date-time')+"<br>");
-    $("#eventData").append("Description: " + card.attr('data-description')+"<br>");
+    var popData = $("#popover-content").children('div').eq(0);
+    console.log(popData);
+    var yesBtn = $("#popover-content").find('button').eq(0);
+    console.log(yesBtn);
+    popData.empty();
+    popData.append("Date: " + card.attr('data-date')+"<br>");
+    popData.append("Time: " + card.attr('date-time')+"<br>");
+    popData.append("Description: " + card.attr('data-description')+"<br>");
+    yesBtn.empty();
+    var aTag = $("<a>");
+    aTag.attr({'href': card.attr('data-url'), 'target': '_blank'});
+    yesBtn.append("Show me more!", aTag);
 
-    // $(this).popover({
-    //   html: true,
-    //   content: function() {
-    //     console.log("hello I am popover");
-    //     return $("#popover-content").html();
-    //   }
-    // });
+    $(this).popover({
+      html: true,
+      content: function() {
+        console.log("hello I am popover");
+        return $("#popover-content").html();
+      }
+    });
+
+    $(this).popover("toggle");
     console.log(card);
   })
 
