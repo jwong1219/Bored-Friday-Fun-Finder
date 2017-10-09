@@ -37,7 +37,7 @@ body {
   padding: 30px;
   padding-top: 13px;
   position: relative;
-  left: 15%;
+  left: 22%;
   top: 36%;
   opacity: .9;
   background-color: #1a1d33;
@@ -67,6 +67,11 @@ body {
   opacity: .9;
   background-color: #1a1d33;
   border: none;
+  width: 68%;
+  height: 56%;
+  position: fixed;
+  bottom: 13%;
+  left: 16%;
 }
 
 #resultsPanel > .panel-heading {
@@ -77,6 +82,19 @@ body {
   border: none;
 }
 
+#resultsPanel > .panel-body {
+  position: relative;
+  height: 91%;
+}
+
+#resultsPanel > .panel-body > .row {
+  height: 100%;
+}
+
+.row .col-xs-9 {
+  height: inherit;
+}
+
 #resultsPanel .interest-btn {
   margin-bottom: 5px;
 }
@@ -84,8 +102,9 @@ body {
 #deck {
   border-left: 2px solid darkgrey;
   overflow-y: scroll;
-  height: 600px;
+  height: inherit;
   overflow-x: hidden;
+  position: inherit;
 }
 
 #deck::-webkit-scrollbar { 
@@ -120,6 +139,12 @@ body {
 
 .popover{
   color: black !important;
+  height: auto;
+}
+
+.popover-content {
+  overflow-y: scroll;
+  height: 72%;
 }
 
 
@@ -129,23 +154,27 @@ body {
     left: 0;
   }
 
+  10% {
+    left: -10%;
+  }
+
   20% {
-    left: 0;
+    left: -20%;
   }
 
-  25% {
-    left: 0;
+  30% {
+    left: -30%;
   }
 
-  25% {
-    left: -100%;
+  40% {
+    left: -40%;
   }
 
-  45% {
-    left: -100%;
+  50% {
+    left: -50%;
   }
 
-  50%{
+  60%{
     left: -200%;
   }
 
@@ -153,11 +182,11 @@ body {
     left: -200%;
   }
 
-  75% {
+  80% {
     left: -300%;
   }
 
-  95% {
+  90% {
     left: -300%;
   }
 
@@ -183,11 +212,12 @@ body {
   left: 0; 
   text-align: center;
   font-size: 15px;
-  animation: 20s slider infinite;
+  animation: 10s slider infinite;
 }
 
 .bannerCardContent{
   background-color: opacity: .5;
+  display: inline-block;
 
 }
 

@@ -146,7 +146,7 @@ $(".eventsBtn").on("click",function(){
       cardDiv.attr("data-image", results[i].logo.url);
       // eventPoster.html(results[i].images[1].url);
       eventPoster.attr("src",results[i].logo.url);
-      //eventPoster.attr("class","img-responsive");
+      eventPoster.attr("class","img-responsive");
       
       cardDiv.append(eventName);
       cardDiv.prepend(eventPoster);
@@ -173,11 +173,11 @@ $(".eventsBtn").on("click",function(){
 //content
 function userSelectsCard() {
 
-    $(".contentCard").on("click", function(){
+  $(".contentCard").on("click", function(){
 
-    // FE to add modal styling & html
-    console.log("content card clicked");
-    //FE to grab URL of content card click & add to yes button
+  // FE to add modal styling & html
+  console.log("content card clicked");
+  //FE to grab URL of content card click & add to yes button
 
 
     //var eventPoster = $(".eventPoster").data();
@@ -190,25 +190,25 @@ function userSelectsCard() {
   }); //end  content card listeners
 
 }
-      $("#yes").on("click", function() {
+$(".yes").on("click", function() {
+  var thisDiv = $(this);
+  console.log(thisDiv);
+  var eventName = $(".contentCard").data("name");
+  var eventPoster = $(".contentCard").data("image");
+  var newEvent = database.ref().push();
 
-        var eventName = $(".contentCard").data("name");
-        var eventPoster = $(".contentCard").data("image");
-        var newEvent = database.ref().push();
+  console.log("event name" + eventName);
+  console.log("event poster" + eventPoster);
+  console.log("new Event" + newEvent);
 
-        console.log("event name" + eventName);
-        console.log("event poster" + eventPoster);
-        console.log("new Event" + newEvent);
+  newEvent.set({
+    nameFB: name,
+    zipcodeFB: zipcode,
+    eventNameFB: eventName,
+    eventPosterFB: eventPoster
+  });
 
-        newEvent.set({
-          nameFB: name,
-          zipcodeFB: zipcode,
-          eventNameFB: eventName,
-          eventPosterFB: eventPoster
-        });
-
-
-    }); //end yes button listeners
+}); //end yes button listeners
 
 database.ref().on("child_added", function(childSnapShot) {
 
@@ -217,13 +217,17 @@ database.ref().on("child_added", function(childSnapShot) {
   var bannerName = childSnapShot.val().nameFB;
   var bannerEventName = childSnapShot.val().eventNameFB;
   var bannerEventPoster = childSnapShot.val().eventPosterFB;
+  var bannerUrl = childSnapShot.val().eventURLFB
 
   console.log(bannerName);
   console.log(bannerEventPoster);
   console.log(bannerEventName);
 
-  var bannerInnerDiv = $("<div>");
+  var bannerInnerDiv = $("<span>");
   // For the banner-josh
+  var bannerInnerLink = $("<a>");
+  bannerInnerLink.attr("href", bannerUrl);
+  bannerInnerLink.attr("target","_blank")
   bannerInnerDiv.addClass("bannerCardContent");
   bannerInnerDiv.attr("src", bannerEventPoster);
   var bannerInnerP = $("<p>");
@@ -234,6 +238,7 @@ database.ref().on("child_added", function(childSnapShot) {
   bannerInnerImg.attr("width", "300px");
 
   bannerInnerDiv.append(bannerInnerP);
+  bannerInnerDiv.append(bannerInnerLink);
   bannerInnerDiv.append(bannerInnerImg);
 
   $("#banner").append(bannerInnerDiv);
