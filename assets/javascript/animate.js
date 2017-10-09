@@ -36,6 +36,7 @@ $(window).on("load", function() {
 
   $("#deck").on("click", ".contentCard", function() {
     var card = $(this);
+    console.log(card);
     var popData = $("#popover-content").children('div').eq(0);
     console.log(popData);
     var yesBtn = $("#popover-content").find('button').eq(0);
