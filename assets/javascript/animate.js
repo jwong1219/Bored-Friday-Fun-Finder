@@ -49,6 +49,9 @@ $(window).on("load", function() {
     var aTag = $("<a>");
     aTag.attr({'href': card.attr('data-url'), 'target': '_blank'});
     yesBtn.append("Show me more!", aTag);
+    //add code for pulling in needed firebase data below
+    //use the card variable that is linked by "this" to the card that was clicked
+
 
     $(this).popover({
       html: true,
