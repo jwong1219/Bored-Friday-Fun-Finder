@@ -8,6 +8,7 @@
 	<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
 	<!-- Moment JS -->
 	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+	<link rel="stylesheet" href="assets/css/animate.css">
 	<link rel="stylesheet" href="assets/css/style.css">
 
 	<title>Friday Fun Finder</title>
@@ -50,7 +51,7 @@
 					</div>
 					<div class="form-group">
 						<label for = "zipcode">Zip Code</label>
-						<input type = "text" class="form-control" id="zipcode" placeholder="">
+						<input type = "text" class="form-control" id="zipcode" minlength = "5" maxlength="5" placeholder="">
 					</div>
 					<button type = "submit" class="btn interest-btn entertainmentBtn">Entertainment</button>
 					<button type = "submit" class="btn interest-btn eventsBtn">Events</button>
