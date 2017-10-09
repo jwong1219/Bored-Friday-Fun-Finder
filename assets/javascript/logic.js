@@ -58,6 +58,9 @@ $("#launchModal").on("click", function() {
     pop.attr('data-image', card.attr('data-image'));
     pop.attr('data-url', card.attr('data-url'));
     console.log(pop);
+    popYesBtn = pop.find('.yes').eq(0);
+    popYesBtn.attr('href', card.attr('data-url'));
+
     var popTemp = $("#popover-temp").html();
     console.log(popTemp);
     var popContent = $("<div>");
@@ -263,11 +266,16 @@ function userSelectsCard() {
 }
 $("#deck").on("click", ".yes", function() {
   var thisDiv = $(this);
-  console.log(thisDiv);
-  var eventName = $(".contentCard").data("name");
-  var eventPoster = $(".contentCard").data("image");
+  var thisPop = thisDiv.parents('.popover').eq(0);
+  console.log({thisDiv});
+  console.log({thisPop});
+  var eventName = thisPop.data("name");
+  var eventPoster = thisPop.data("image");
+  var eventUrl = thisPop.data("url");
   var newEvent = database.ref().push();
 
+  console.log({name});
+  console.log({zipcode});
   console.log("event name" + eventName);
   console.log("event poster" + eventPoster);
   console.log("new Event" + newEvent);
@@ -276,7 +284,8 @@ $("#deck").on("click", ".yes", function() {
     nameFB: name,
     zipcodeFB: zipcode,
     eventNameFB: eventName,
-    eventPosterFB: eventPoster
+    eventPosterFB: eventPoster,
+    eventURLFB: eventUrl,
   });
 
 }); //end yes button listeners
