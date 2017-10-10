@@ -141,19 +141,25 @@ body {
   opacity: 1;
 }
 
-.popover{
+.popover {
   color: black !important;
   height: auto;
+  border-radius: 15px;
+}
+
+#popover-temp {
+  border-radius: 15px;
 }
 
 .popover-content {
+  /*trying this scroll*/
   overflow-y: scroll;
   height: 85%;
 }
 
-.popover-footer{
+/*.popover-footer{
   position: fixed;
-}
+}*/
 
 #banner img {
   width: 300px;
