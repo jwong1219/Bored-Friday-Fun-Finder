@@ -318,8 +318,8 @@ database.ref().on("child_added", function(childSnapShot) {
   bannerInnerImg.attr("width", "300px");
 
   bannerInnerDiv.append(bannerInnerP);
+  bannerInnerLink.append(bannerInnerImg);
   bannerInnerDiv.append(bannerInnerLink);
-  bannerInnerDiv.append(bannerInnerImg);
 
   $("#banner").append(bannerInnerDiv);
 
