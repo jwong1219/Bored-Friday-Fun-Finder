@@ -15,6 +15,8 @@ var database = firebase.database();
 var name = "";
 var zipcode = "";
 
+
+
 function welcome(showing) {
   if(showing === false) {
     $("#welcomeModal").modal({"show": "true", /*"backdrop": "static"*/});
@@ -64,10 +66,12 @@ $(window).on("load", function() {
     var popTemp = $("#popover-temp").html();
     console.log(popTemp);
     var popContent = $("<div>");
+    var popContentDes = $("<p>");
     popContent.empty();
-    popContent.append("Date: " + card.attr('data-date')+"<br>");
+    popContent.append("<p>"+"Date: " + card.attr('data-date')+"</p>");
     popContent.append("Time: " + card.attr('date-time')+"<br>");
-    popContent.append("Description: " + card.attr('data-description')+"<br>");
+    popContentDes.append("<p>"+"Description: " + card.attr('data-description')+ "</p>");
+    popContent.append(popContentDes);
     
     console.log({popContent});
     $(this).popover({
@@ -158,7 +162,6 @@ $(".entertainmentBtn").on("click",function(event){
       $("#deck").append(cardDiv);
               
     }
-    userSelectsCard();
   })
 }); //End Ticket Master Button Listener
 
@@ -239,32 +242,9 @@ $(".eventsBtn").on("click",function(){
               
     }
 
-    //calls content card listener
-    userSelectsCard();
     })
     
-}) //end eventBrite Button Listener
-
-//content
-function userSelectsCard() {
-
-  $(".contentCard").on("click", function(){
-
-  // FE to add modal styling & html
-  console.log("content card clicked");
-  //FE to grab URL of content card click & add to yes button
-
-
-    //var eventPoster = $(".eventPoster").data();
-    // console.log("eventPoster " + eventPoster);
-    // database.ref().push({
-    //    eventNameFB: eventName,
-    //    eventPosterFB: eventPoster
-    //   }); 
-
-  }); //end  content card listeners
-
-}
+}); //end eventBrite Button Listener
 
 // JWong version
 $("#deck").on("click", ".popover-footer .yes", function() {
@@ -309,6 +289,7 @@ database.ref().on("child_added", function(childSnapShot) {
   console.log(bannerEventPoster);
   console.log(bannerEventName);
 
+  var bannerContainer = $("<div>");
   var bannerInnerDiv = $("<span>");
   // For the banner-josh
   var bannerInnerLink = $("<a>");
@@ -316,6 +297,8 @@ database.ref().on("child_added", function(childSnapShot) {
   bannerInnerLink.attr("target","_blank")
   bannerInnerDiv.addClass("bannerCardContent");
   bannerInnerDiv.attr("src", bannerEventPoster);
+  bannerInnerDiv.addClass("mySlides w3-animate-right")
+  // bannerInnerImg.css("style", "100%" )
   var bannerInnerP = $("<p>");
   bannerInnerP.html(bannerName);
   var bannerInnerImg = $("<img>");
@@ -326,17 +309,16 @@ database.ref().on("child_added", function(childSnapShot) {
   bannerInnerDiv.append(bannerInnerP);
   bannerInnerLink.append(bannerInnerImg);
   bannerInnerDiv.append(bannerInnerLink);
+  bannerContainer.append(bannerInnerDiv);
 
+  // $(".slick-track").append(bannerContainer);
+$('#banner').slick('slickAdd',bannerContainer);
 
-  $("#banner").append(bannerInnerDiv);
-
-  addClassForBanner();
-
+  
+  // carousel();
+ 
 });
 
-function addClassForBanner(){
-$( "span:nth-of-type(1)" ).addClass("firstImage");
-}
 
 $("#zipcode").focusout(function(){
   var zipcode =$(this).val();
@@ -373,6 +355,49 @@ $("#zipcode").focusout(function(){
 });
 
 
+  $("#banner").slick({
+    // setting-name: setting-value
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+  });
+
+    
+  
+//   myIndex ++;
+
+//   myIndex = 0;
+// function carousel(){
+//   var bannerSlides = $(".bannerCardContent");
+//   var displayNone = "none";
+//   var displayBlock = "block";
+
+//   for ( var i = 0; i < bannerSlides.length; i++){
+//     console.log(bannerSlides[i]);
+//     bannerSlides[i].style = displayBlock
+//   }
+
+
+//   //  for ( var i = 0; i < x.length; i++) { 
+//   //   x[i].style.display = "none";
+//   // }
+//   // console.log()
+  
+//   // myIndex ++;
+
+//   // if(myIndex > x.length) {
+//   //   myIndex = 1
+//   // }
+//   // console.log(x[myIndex-1]);
+//   // x[myIndex-1].style.display = "block";
+//   // setTimeout(carousel, 4000);
+// }
+
+
+// // for (var i = 0; i < x.length;; i++){
+// //   x[i].
+// // }
 
 
 
