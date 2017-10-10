@@ -89,6 +89,8 @@ $("#launchModal").on("click", function() {
 $(".entertainmentBtn").on("click",function(event){
   
   event.preventDefault();
+  // Hides modal after clicking
+  $("#welcomeModal").modal('hide');
   $("#deck").empty();
 
   //console.log($("#name").val().trim());
@@ -161,6 +163,8 @@ $(".entertainmentBtn").on("click",function(event){
 $(".eventsBtn").on("click",function(){
 
     event.preventDefault();
+      // Hides modal after clicking
+    $("#welcomeModal").modal('hide');
     $("#deck").empty();
     
     console.log($("#name").val().trim());
@@ -203,7 +207,6 @@ $(".eventsBtn").on("click",function(){
 
       //attribute for data-date
       var localTime = results[i].start.local;
-      console.log(localTime.split("T"));
       var dateSplit = localTime.split("T");
       var dateArray = dateSplit[0];
       // localTime.split("T")
