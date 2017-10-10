@@ -317,12 +317,18 @@ database.ref().on("child_added", function(childSnapShot) {
   bannerInnerImg.attr("width", "300px");
 
   bannerInnerDiv.append(bannerInnerP);
-  bannerInnerDiv.append(bannerInnerLink);
   bannerInnerLink.append(bannerInnerImg);
+  bannerInnerDiv.append(bannerInnerLink);
 
   $("#banner").append(bannerInnerDiv);
 
+  addClassForBanner();
+
 });
+
+function addClassForBanner(){
+$( "span:nth-of-type(1)" ).addClass("firstImage");
+}
 
 $("#zipcode").focusout(function(){
   var zipcode =$(this).val();
