@@ -317,12 +317,6 @@ database.ref().on("child_added", function(childSnapShot) {
   bannerInnerImg.attr("width", "300px");
 
   bannerInnerDiv.append(bannerInnerP);
-<<<<<<< HEAD
-=======
-  bannerInnerLink.append(bannerInnerImg);
-  bannerInnerDiv.append(bannerInnerLink);
-
->>>>>>> 089439c29574940526c6a25f5d2048c0144f0306
   bannerInnerLink.append(bannerInnerImg);
   bannerInnerDiv.append(bannerInnerLink);
 

@@ -165,12 +165,13 @@ body {
 }
 
 /*keyframe animations*/
-.firstImage {
+.bannerCardContent {
   -webkit-animation: bannermove 15s linear infinite;
      -moz-animation: bannermove 15s linear infinite;
       -ms-animation: bannermove 15s linear infinite;
        -o-animation: bannermove 15s linear infinite;
           animation: bannermove 15s linear infinite;
+  float: left;
 }
 
 @keyframes "bannermove" {
@@ -184,7 +185,7 @@ body {
 
 }
 
-@-moz-keyframes bannermove {
+@-moz-keyframes "bannermove" {
  0% {
    margin-left: 0px;
  }
@@ -248,16 +249,10 @@ body {
 
   
 /*Media Queries*/
-
-
 @media screen and (max-width:980px) {
-
-
     body { /* all fonts outside of a modal or pop-over*/
       font-size: 1.2em;
     }
-
-
     #slider img { /*banner image*/
       width:200px;
       height:100px;
@@ -269,35 +264,23 @@ body {
       width: 100%;
       height: 100%;
     }
-
     .popover-footer a {/*for show more button and no*/
       font-size: .7em;
     }
-
     #welcomeMessage {/*modal header*/
       font-size: 20px;
     }
-
     #name form-control {/*input text inside welcome modal*/
       height:20px;
     }
-
     .interest-btn {
       width:100%;
     }
-
   }
-
-
 @media screen and (max-width:768px) {
-
-
-
  /*   body {  all fonts outside of a modal or pop-over
       font-size: 1em;
     }*/
-
-
     #slider img { /*banner image*/
       width:150px;
       height:100px;
@@ -309,15 +292,12 @@ body {
       width: 90%;
       height: 90%;
     }
-
     .popover-footer a {/*for show more button and no*/
       font-size: 1em;
     }
-
     #welcomeMessage {/*modal header*/
       font-size: 15px;
     }
-
     #name form-control {/*input text inside welcome modal*/
       height:15px;
     }
@@ -325,18 +305,11 @@ body {
     .interest-btn {/*interest button*/
       padding:5px;
     }
-
     .btn {
       width:100%;
     }
-
-
-
 }
-
 @media screen and (max-width:640px) {
-
-
   #slider img {
     width: 200px;
     height: 200px;
@@ -361,38 +334,4 @@ body {
   .interest-btn {/*interest button*/
       margin-top: 20px
     }
-
-
-}
-
-
-/*Media Queries*/
-@media screen and (max-width:980px) {
-  body { 
-    font-size: .9em;
-  }
-  #slider img {
-    width:200px;
-    height:100px;
-  }
-  
-  .popover-content {
-    font-size: .7em;
-  }
-  .popover-footer a {
-    font-size: .9em;
-  }
-  .btn {
-  width:100%;
-}
-}
-@media screen and (max-width:768px) {
-}
-@media screen and (max-width:640px) {
-
-#slider img {
-  width: 300px;
-  height: 150px;
-  margin-left: 5px;
-  margin-right: 5px;
 }
