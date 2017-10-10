@@ -36,6 +36,7 @@ function welcome(showing) {
 // console.log($("#welcomeModal"));
 var welcomeModal = false;
 $(window).on("load", function() {
+  welcome(welcomeModal);
   // setTimeout(welcome, 500);
   // setTimeout(function() {
   //   $("#welcomeMessage").append("<br>Lets get started...")
@@ -45,7 +46,7 @@ $(window).on("load", function() {
   // },4000);
 
 
-$("#launchModal").on("click", function() {
+  $("#launchModal").on("click", function() {
     welcome(welcomeModal);  
   });
 
@@ -123,7 +124,7 @@ $(".entertainmentBtn").on("click",function(event){
       cardDiv.addClass("col-xs-4");
       cardDiv.addClass("contentCard");
       cardDiv.attr("data-name", results[i].name);
-      cardDiv.attr("data-title",results[i].name.text);
+      cardDiv.attr("data-title",results[i].name);
       cardDiv.attr("data-description",results[i].info);
       cardDiv.attr("data-date", results[i].dates.start.localDate);
       var localTime = results[i].dates.start.localTime;
@@ -227,15 +228,6 @@ $(".eventsBtn").on("click",function(){
       $("#deck").append(cardDiv);
               
     }
-    //added by JWong for experimenting... don't mind me....
-    // $("[data-toggle=popover]").popover({
-    //   html: true,
-    //   content: function() {
-    //     console.log("hello I am popover");
-    //     return $("#popover-content").html();
-    //   } 
-    // });
-    //end of JWong's scheming
 
     //calls content card listener
     userSelectsCard();
@@ -263,7 +255,10 @@ function userSelectsCard() {
   }); //end  content card listeners
 
 }
-$("#deck").on("click", ".yes", function() {
+
+// JWong version
+$("#deck").on("click", ".popover-footer .yes", function() {
+  $(this).parents(".popover").popover('destroy');
   var thisDiv = $(this);
   var thisPop = thisDiv.parents('.popover').eq(0);
   console.log({thisDiv});
@@ -286,9 +281,11 @@ $("#deck").on("click", ".yes", function() {
     eventPosterFB: eventPoster,
     eventURLFB: eventUrl,
   });
-
 }); //end yes button listeners
 
+$("#deck").on("click", ".popover-footer .no", function() {
+  $(this).parents(".popover").popover('destroy');
+});
 database.ref().on("child_added", function(childSnapShot) {
 
   console.log(childSnapShot.val());
@@ -344,7 +341,7 @@ $("#zipcode").focusout(function(){
   }).done(function(response){
 
     console.log(response);
-    $("#welcomeModalBody").children('button').removeClass("disabled");
+    $("#welcomeModalBody").find('.interest-btn').prop("disabled", false);
     // if (Object.keys(response).length === 0){
     //   console.log("not a good zipcode")
     // }
@@ -360,8 +357,7 @@ $("#zipcode").focusout(function(){
     .one('webkitAnimationEnd oanimationend animationend', function() {
       $("#zipcode").removeClass('animated shake');
     });
-    $("#welcomeModalBody").children('.interest-btn').addClass("disabled");
-    console.log($("#welcomeModalBody").children('button'));
+    $("#welcomeModalBody").find('.interest-btn').prop("disabled", true);
   })
 
 });
