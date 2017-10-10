@@ -109,7 +109,10 @@ $(".entertainmentBtn").on("click",function(event){
 // Ajax call
   $.ajax({
       url: queryUrl,
-      method: "GET"
+      method: "GET",
+      error: function (request, status, error) {
+                  alert("Your disconneted");
+      },
   }).done(function(response) {
       
     // console.log(response);
@@ -177,7 +180,11 @@ $(".eventsBtn").on("click",function(){
   // Ajax call
   $.ajax({
     url: queryUrl,
-    method: "GET"
+    method: "GET",
+    error: function (request, status, error)
+     {
+        alert("Your disconneted!!!");
+     },
   }).done(function(response) {
         
     console.log(response);
