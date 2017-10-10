@@ -30,15 +30,15 @@ body {
 }
 
 .modal-content {
-  height: 37%;
+  height: 46%;
   min-height: 337px;
   width: 70%;
   max-width: 1020px;
   padding: 30px;
   padding-top: 13px;
   position: relative;
-  left: 22%;
-  top: 36%;
+  left: 15%;
+  top: 33%;
   opacity: .9;
   background-color: #1a1d33;
   color: #f38a05;
@@ -52,6 +52,13 @@ body {
 }
 
 .interest-btn {
+  background-color: #3f3e3e;
+  opacity: 1.5;
+  margin-right: 10px;
+  color: #f38a05;
+}
+
+.yes, .no {
   background-color: #3f3e3e;
   opacity: 1.5;
   margin-right: 10px;
@@ -138,28 +145,59 @@ body {
 }
 
 #deck div img {
-  opacity: 1;
+  opacity: 1 !important;
 }
 
 .popover {
   color: black !important;
-  height: auto;
+  /*height: auto;*/
   border-radius: 15px;
+  top: -0.210938px;
+  left: 169.894px;
+  display: block;
+  width: 30%;
+  position: absolute;
+  height: 50%;
+}
+
+.popover * {
+  border: none;
+}
+
+.arrow {
+  top: 35%;
 }
 
 #popover-temp {
   border-radius: 15px;
 }
 
+.popover-title {
+  background-color: #3f3e3e;
+  color: #f38a05;
+}
+
 .popover-content {
   /*trying this scroll*/
   overflow-y: scroll;
-  height: 85%;
+  height: 80%;
+  background-color: grey;
+  color: floralwhite;
 }
 
-/*.popover-footer{
-  position: fixed;
-}*/
+.popover-footer {
+  position: absolute;
+  bottom: -84px;
+  left: 0px;
+  margin: 0;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  background-color: darkgrey;
+  border: 1px solid #EBEBEB;
+  border-top: none;
+}
 
 #banner img {
   width: 300px;
@@ -169,8 +207,9 @@ body {
 
 #slider {
   width: 1000px;
+  height: 27%;
   overflow: hidden;
-  margin: 50px auto;
+  margin: 5px auto;
   background-color: grey;
 }
 

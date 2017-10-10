@@ -14,29 +14,37 @@ firebase.initializeApp(config);
 var database = firebase.database();
 var name = "";
 var zipcode = "";
+var welcomeMessage = "Looking for something to do? Welcome to your Friday night.<br>Lets get started..."
+var errorMessage = "Looks like there was a problem finding your results. Please try again."
 
-function welcome(showing) {
-  if(showing === false) {
-    $("#welcomeModal").modal({"show": "true", /*"backdrop": "static"*/});
+function welcome(message) {
+  // if(welcomeModal === true){
+  //   $("#welcomeModal").modal("show", "false");
+  //   welcomeModal = false;
+  // }
+  // else if(welcomeModal === false) {
+    console.log("WELCOME!");
+    $("#welcomeModal").modal({"show": "true", "backdrop": "static"});
     setTimeout(function() {
-      $("#welcomeMessage").append("<br>Lets get started...")
-    },0);
+      $("#welcomeMessage").empty();
+      $("#welcomeMessage").html(message);
+      console.log("messaging")
+    },2500,message);
     setTimeout(function() {
       $("#welcomeModalBody").removeClass("invisible")
-    },0);
-    welcomeModal = true;
-
-  }
-  else {
-    $("#welcomeModal").modal("show", "false");
-    welcomeModal = false;
-  }
+    },4000);
+  //   welcomeModal = true;
+  // }
+  // else {
+  //   $("#welcomeModal").modal("show", "false");
+  //   welcomeModal = false;
+  // }
 }
 
 // console.log($("#welcomeModal"));
-var welcomeModal = false;
+// var welcomeModal = false;
 $(window).on("load", function() {
-  welcome(welcomeModal);
+  welcome(welcomeMessage);
   // setTimeout(welcome, 500);
   // setTimeout(function() {
   //   $("#welcomeMessage").append("<br>Lets get started...")
@@ -46,43 +54,38 @@ $(window).on("load", function() {
   // },4000);
 
 
-  $("#launchModal").on("click", function() {
-    welcome(welcomeModal);  
-  });
+  // $("#launchModal").on("click", function() {
+  //   welcome();  
+  // });
 
   $("#deck").on("click", ".contentCard", function() {
     var card = $(this);
-    console.log(card);
     var pop = $("#popover-temp").find('.popover').eq(0);
     pop.attr('data-name', card.attr('data-name'));
     pop.attr('data-image', card.attr('data-image'));
     pop.attr('data-url', card.attr('data-url'));
-    console.log(pop);
     popYesBtn = pop.find('.yes').eq(0);
     popYesBtn.attr('href', card.attr('data-url'));
 
     var popTemp = $("#popover-temp").html();
-    console.log(popTemp);
     var popContent = $("<div>");
     popContent.empty();
     popContent.append("Date: " + card.attr('data-date')+"<br>");
     popContent.append("Time: " + card.attr('date-time')+"<br>");
     popContent.append("Description: " + card.attr('data-description')+"<br>");
     
-    console.log({popContent});
     $(this).popover({
       html: true,
       // template: ($("#popover-temp").find('.popover')[0]),
       template: popTemp,
       content: function() {
-        console.log("hello I am popover");
         return popContent.html();
       },
+      footer:  popYesBtn.html(),
     });
 
     $(this).popover("toggle");
-    // console.log(card);
-    
+    // console.log(card); 
   })
 });
 
@@ -90,84 +93,128 @@ $(window).on("load", function() {
 $(".entertainmentBtn").on("click",function(event){
   
   event.preventDefault();
-  // Hides modal after clicking
-  $("#welcomeModal").modal('hide');
-  $("#deck").empty();
+  var zipcode =$("#zipcode").val();
+  galoreUrl = "http://api.zippopotam.us/us/";
 
-  //console.log($("#name").val().trim());
-  //console.log($("#zipcode").val().trim());
+  var queryUrl = galoreUrl + zipcode;
+  console.log(queryUrl);
 
-  var Url = "https://app.ticketmaster.com/discovery/v2/events.json?&sort=date,asc&";
-  var apikey = "&apikey=JRiceOsMrH7LY3ePHpJNLPjE1ZgeFGAD"
-  var zipcodeUrlPath = "&postalCode="; 
-  zipcode = $("#zipcode").val().trim();
-  name = $("#name").val().trim();
-  var size = "size=" + 12;
-  var date = "&onsalesEndDateTime=" + moment().format("YYYY-MM-DD");
-  var queryUrl = Url + size + date + zipcodeUrlPath +zipcode + apikey;
-  // console.log(date);
-  // console.log(queryUrl);
+  $.ajax ({
+    url: queryUrl,
+    method: "GET"
+  }).done(function(response){
+    // console.log(response);
+    // $("#welcomeModalBody").find('.interest-btn').prop("disabled", false);
+    // console.log("good zip code");
 
-// Ajax call
-  $.ajax({
+    $("#resultsPanel").addClass('hidden');
+    // Hides modal after clicking
+    $("#welcomeModal").modal('hide');
+    // $("body").remove('.modal-backdrop');
+    $("#deck").empty();
+
+    var Url = "https://app.ticketmaster.com/discovery/v2/events.json?&sort=date,asc&";
+    var apikey = "&apikey=JRiceOsMrH7LY3ePHpJNLPjE1ZgeFGAD"
+    var zipcodeUrlPath = "&postalCode="; 
+    zipcode = $("#zipcode").val().trim();
+    name = $("#name").val().trim();
+    var size = "size=" + 12;
+    var date = "&onsalesEndDateTime=" + moment().format("YYYY-MM-DD");
+    var queryUrl = Url + size + date + zipcodeUrlPath +zipcode + apikey;
+    
+    // Ajax call
+    $.ajax({
       url: queryUrl,
       method: "GET",
-      error: function (request, status, error) {
-                  alert("Your disconneted");
-      },
-  }).done(function(response) {
-      
-    // console.log(response);
-    var results = response._embedded.events;
-    // console.log(results);      
+    }).done(function(response) {
+        
+      console.log(response);
+      // if(response.page.totalElements === 0){
+        
+      //   $("#resultsPanel").addClass('hidden');
+      //   // Hides modal after clicking
+      //   $("#welcomeModal").modal('hide');
+      //   $("body").remove('.modal-backdrop');
+      //   $("#deck").empty();
 
-//iterate all events 
+      //   welcome(errorMessage);
+      //   return;
+      // }
+      var results = response._embedded.events;
+      // console.log(results);      
 
-    for(var i = 0;i < results.length; i++){
+      //iterate all events 
 
-      var cardDiv = $("<div>");
-      cardDiv.addClass("col-xs-4");
-      cardDiv.addClass("contentCard");
-      cardDiv.attr("data-name", results[i].name);
-      cardDiv.attr("data-title",results[i].name);
-      cardDiv.attr("data-description",results[i].info);
-      cardDiv.attr("data-date", results[i].dates.start.localDate);
-      var localTime = results[i].dates.start.localTime;
-      cardDiv.attr("data-time", moment(localTime, 'HH:mm').format('hh:mm a'));
-      cardDiv.attr("data-url",results[i].url);
-      cardDiv.attr("data-placement","auto right");
-      cardDiv.attr("data-toggle","popover");
-      // added by JWong
-      cardDiv.attr("data-trigger", "manual");
+      for(var i = 0;i < results.length; i++){
 
-      // console.log(localTime);
-      // console.log(moment(localTime, 'HH:mm').format('hh:mm a'));
+        var cardDiv = $("<div>");
+        cardDiv.addClass("col-xs-4");
+        cardDiv.addClass("contentCard");
+        cardDiv.attr("data-name", results[i].name);
+        cardDiv.attr("data-title",results[i].name);
+        cardDiv.attr("data-description",results[i].info);
+        cardDiv.attr("data-date", results[i].dates.start.localDate);
+        var localTime = results[i].dates.start.localTime;
+        cardDiv.attr("data-time", moment(localTime, 'HH:mm').format('hh:mm a'));
+        cardDiv.attr("data-url",results[i].url);
+        cardDiv.attr("data-placement","auto right");
+        cardDiv.attr("data-toggle","popover");
+        // added by JWong
+        cardDiv.attr("data-trigger", "manual");
 
-      var eventName = $("<p>");
-      eventName.html(results[i].name);
-      
-      var eventPoster = $("<img>");
-      //eventPoster.html(results[i].images[1].url);
-      eventPoster.attr("src",results[i].images[1].url);
-      eventPoster.attr("class","img-responsive");
-      cardDiv.attr("data-image",results[i].images[1].url);
-      
-      cardDiv.append(eventName);
-      cardDiv.prepend(eventPoster);
+        // console.log(localTime);
+        // console.log(moment(localTime, 'HH:mm').format('hh:mm a'));
 
-      $("#deck").append(cardDiv);
-              
-    }
-    userSelectsCard();
+        var eventName = $("<p>");
+        eventName.html(results[i].name);
+        
+        var eventPoster = $("<img>");
+        //eventPoster.html(results[i].images[1].url);
+        eventPoster.attr("src",results[i].images[1].url);
+        eventPoster.attr("class","img-responsive");
+        cardDiv.attr("data-image",results[i].images[1].url);
+        
+        cardDiv.append(eventName);
+        cardDiv.prepend(eventPoster);
+
+        $("#deck").append(cardDiv);              
+      }
+      $("#slider").removeClass('hidden');
+      $("#resultsPanel").removeClass('hidden');
+    }).fail(function() {
+      welcome(errorMessage);
+    });
+  }).fail(function(response) {
+  console.log("bad zip");
+  $("#zipcode").addClass('animated shake')
+  .one('webkitAnimationEnd oanimationend animationend', function() {
+    $("#zipcode").removeClass('animated shake');
+  });
+  $("#welcomeModalBody").find('.interest-btn').prop("disabled", true);
   })
 }); //End Ticket Master Button Listener
 
 
 //EventBrite
 $(".eventsBtn").on("click",function(){
+  event.preventDefault();
 
-    event.preventDefault();
-      // Hides modal after clicking
+  var zipcode =$("#zipcode").val();
+  galoreUrl = "http://api.zippopotam.us/us/";
+
+  var queryUrl = galoreUrl + zipcode;
+  console.log(queryUrl);
+
+  $.ajax ({
+    url: queryUrl,
+    method: "GET"
+  }).done(function(response){
+    console.log(response);
+    $("#welcomeModalBody").find('.interest-btn').prop("disabled", false);
+    console.log("good zip code");
+    
+    // Hides modal after clicking
+    $("#resultsPanel").addClass('hidden');
     $("#welcomeModal").modal('hide');
     $("#deck").empty();
     
@@ -181,90 +228,73 @@ $(".eventsBtn").on("click",function(){
     var queryUrl = url + zipcodeUrlPath+ zipcode + token;
     console.log(queryUrl);
 
-  // Ajax call
-  $.ajax({
-    url: queryUrl,
-    method: "GET",
-    error: function (request, status, error)
-     {
-        alert("Your disconneted!!!");
-     },
-  }).done(function(response) {
+    // Ajax call
+    $.ajax({
+      url: queryUrl,
+      method: "GET",
+    }).done(function(response) {
+          
+      console.log(response);
+
+      var results = response.events;
+      console.log(results);      
+
+    //iterate all events 
+
+      for(var i = 0;i < 12; i++){
+
+        var cardDiv = $("<div>");
+        cardDiv.addClass("col-xs-4");        
+        cardDiv.addClass("contentCard");
+        cardDiv.attr("data-url",results[i].url);
+        cardDiv.attr("data-name",results[i].name.text);
+        cardDiv.attr("data-description", results[i].description.text);
+        cardDiv.attr("data-placement","auto right");
+        cardDiv.attr("data-title",results[i].name.text);
+        cardDiv.attr("data-toggle","popover");
+        // added by JWong
+        cardDiv.attr("data-trigger", "manual");
         
-    console.log(response);
 
-    var results = response.events;
-    console.log(results);      
+        //attribute for data-date
+        var localTime = results[i].start.local;
+        var dateSplit = localTime.split("T");
+        var dateArray = dateSplit[0];
+        // localTime.split("T")
+        cardDiv.attr("data-date",dateArray);
+        //attribute for data-time
+        var timeArray = dateSplit[1];
+        cardDiv.attr("date-time", timeArray);
 
-//iterate all events 
+        var eventName = $("<p>");
+        eventName.html(results[i].name.text);
+        
+        var eventPoster = $("<img>");
+        cardDiv.attr("data-image", results[i].logo.url);
+        // eventPoster.html(results[i].images[1].url);
+        eventPoster.attr("src",results[i].logo.url);
+        eventPoster.attr("class","img-responsive");
+        
+        cardDiv.append(eventName);
+        cardDiv.prepend(eventPoster);
 
-    for(var i = 0;i < 12; i++){
-
-      var cardDiv = $("<div>");
-      cardDiv.addClass("col-xs-4");        
-      cardDiv.addClass("contentCard");
-      cardDiv.attr("data-url",results[i].url);
-      cardDiv.attr("data-name",results[i].name.text);
-      cardDiv.attr("data-description", results[i].description.text);
-      cardDiv.attr("data-placement","auto right");
-      cardDiv.attr("data-title",results[i].name.text);
-      cardDiv.attr("data-toggle","popover");
-      // added by JWong
-      cardDiv.attr("data-trigger", "manual");
-      
-
-      //attribute for data-date
-      var localTime = results[i].start.local;
-      var dateSplit = localTime.split("T");
-      var dateArray = dateSplit[0];
-      // localTime.split("T")
-      cardDiv.attr("data-date",dateArray);
-      //attribute for data-time
-      var timeArray = dateSplit[1];
-      cardDiv.attr("date-time", timeArray);
-
-      var eventName = $("<p>");
-      eventName.html(results[i].name.text);
-      
-      var eventPoster = $("<img>");
-      cardDiv.attr("data-image", results[i].logo.url);
-      // eventPoster.html(results[i].images[1].url);
-      eventPoster.attr("src",results[i].logo.url);
-      eventPoster.attr("class","img-responsive");
-      
-      cardDiv.append(eventName);
-      cardDiv.prepend(eventPoster);
-
-      $("#deck").append(cardDiv);
-              
-    }
-
-    //calls content card listener
-    userSelectsCard();
-    })
-    
+        $("#deck").append(cardDiv);         
+      }
+      $("#slider").removeClass('hidden');
+      $("#resultsPanel").removeClass('hidden');
+    }).fail(function() {
+      welcome(errorMessage);
+    });
+  }).fail(function(response) {
+    console.log("bad zip");
+    $("#zipcode").addClass('animated shake')
+    .one('webkitAnimationEnd oanimationend animationend', function() {
+      $("#zipcode").removeClass('animated shake');
+    });
+    $("#welcomeModalBody").find('.interest-btn').prop("disabled", true);
+  })   
 }) //end eventBrite Button Listener
 
-//content
-function userSelectsCard() {
-
-  $(".contentCard").on("click", function(){
-
-  // FE to add modal styling & html
-  console.log("content card clicked");
-  //FE to grab URL of content card click & add to yes button
-
-
-    //var eventPoster = $(".eventPoster").data();
-    // console.log("eventPoster " + eventPoster);
-    // database.ref().push({
-    //    eventNameFB: eventName,
-    //    eventPosterFB: eventPoster
-    //   }); 
-
-  }); //end  content card listeners
-
-}
 
 // JWong version
 $("#deck").on("click", ".popover-footer .yes", function() {
@@ -338,6 +368,8 @@ function addClassForBanner(){
 $( "span:nth-of-type(1)" ).addClass("firstImage");
 }
 
+// $("#zipcode").focusout(checkZip);
+
 $("#zipcode").focusout(function(){
   var zipcode =$(this).val();
   galoreUrl = "http://api.zippopotam.us/us/";
@@ -349,19 +381,10 @@ $("#zipcode").focusout(function(){
     url: queryUrl,
     method: "GET"
   }).done(function(response){
-
     console.log(response);
     $("#welcomeModalBody").find('.interest-btn').prop("disabled", false);
-    // if (Object.keys(response).length === 0){
-    //   console.log("not a good zipcode")
-    // }
-    // else {
-    //   console.log(response + "this is good");
-    // }
     console.log("good zip code");
-
   }).fail(function(response) {
-
     console.log("bad zip");
     $("#zipcode").addClass('animated shake')
     .one('webkitAnimationEnd oanimationend animationend', function() {
@@ -369,10 +392,40 @@ $("#zipcode").focusout(function(){
     });
     $("#welcomeModalBody").find('.interest-btn').prop("disabled", true);
   })
-
 });
 
+// function checkZip() {
+//   var zipcode =$("#zipcode").val();
+//   galoreUrl = "http://api.zippopotam.us/us/";
 
+//   var queryUrl = galoreUrl + zipcode;
+//   console.log(queryUrl);
+
+//   $.ajax ({
+//     url: queryUrl,
+//     method: "GET"
+//   }).done(function(response){
+
+//     console.log(response);
+//     $("#welcomeModalBody").find('.interest-btn').prop("disabled", false);
+//     // if (Object.keys(response).length === 0){
+//     //   console.log("not a good zipcode")
+//     // }
+//     // else {
+//     //   console.log(response + "this is good");
+//     // }
+//     console.log("good zip code");
+
+//   }).fail(function(response) {
+
+//     console.log("bad zip");
+//     $("#zipcode").addClass('animated shake')
+//     .one('webkitAnimationEnd oanimationend animationend', function() {
+//       $("#zipcode").removeClass('animated shake');
+//     });
+//     $("#welcomeModalBody").find('.interest-btn').prop("disabled", true);
+//   })
+// }
 
 
 
