@@ -156,7 +156,7 @@ $(".eventsBtn").on("click",function(){
   event.preventDefault();
 
   var zipcode =$("#zipcode").val();
-  galoreUrl = "http://api.zippopotam.us/us/";
+  galoreUrl = "https://api.zippopotam.us/us/";
 
   var queryUrl = galoreUrl + zipcode;
 
@@ -302,7 +302,7 @@ $('#banner').slick('slickAdd',bannerContainer);
 
 $("#zipcode").focusout(function(){
   var zipcode =$(this).val();
-  galoreUrl = "http//api.zippopotam.us/us/";
+  galoreUrl = "https://api.zippopotam.us/us/";
 
   var queryUrl = galoreUrl + zipcode;
 
