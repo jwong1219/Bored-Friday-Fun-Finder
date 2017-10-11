@@ -172,7 +172,7 @@ $(".eventsBtn").on("click",function(){
     $("#deck").empty();
     
     name = $("#name").val().trim();
-    var url= "http://www.eventbriteapi.com/v3/events/search/?date_modified.keyword=today&";
+    var url= "https://www.eventbriteapi.com/v3/events/search/?date_modified.keyword=today&";
     var zipcodeUrlPath = "location.address=";
     zipcode = $("#zipcode").val().trim();
     var token = "&token=VHOSAZQCRGKLWAAH7UX2" 
