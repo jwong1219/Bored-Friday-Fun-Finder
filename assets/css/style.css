@@ -24,9 +24,11 @@ body {
   background-attachment: fixed;
 }
 
-#welcomeModal {
-  /*width: 70%;
-  height: 50%;*/
+#banner p {
+  font-size: 25px;
+  color: white;
+  text-align: center;
+  padding-right: 150px;
 }
 
 .modal-content {
@@ -43,7 +45,6 @@ body {
   background-color: #1a1d33;
   color: #f38a05;
   -webkit-animation-duration: .6s;
-  /*-webkit-animation-delay: 2s;*/
   -webkit-animation-iteration-count: 1;
 }
 
@@ -68,11 +69,6 @@ body {
 .form-control {
   background-color: silver;
 }
-
-
-/*#resultsRow {
-  position: fixed;
-}*/
 
 #resultsPanel {
   opacity: .9;
@@ -150,7 +146,6 @@ body {
 
 .popover {
   color: black !important;
-  /*height: auto;*/
   border-radius: 15px;
   top: -0.210938px;
   left: 169.894px;
@@ -179,7 +174,6 @@ body {
 }
 
 .popover-content {
-  /*trying this scroll*/
   overflow-y: scroll;
 
   height: 80%;
@@ -199,6 +193,11 @@ body {
   background-color: darkgrey;
   border: 1px solid #EBEBEB;
   border-top: none;
+}
+
+span img {
+  width: 300px;
+  height: 150px;
 }
 
 /*Media Queries*/
