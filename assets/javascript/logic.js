@@ -19,11 +19,6 @@ var welcomeMessage = "Looking for something to do? Welcome to your Friday night.
 var errorMessage = "Looks like there was a problem finding your results. Please try again."
 
 function welcome(message) {
-  // if(welcomeModal === true){
-  //   $("#welcomeModal").modal("show", "false");
-  //   welcomeModal = false;
-  // }
-  // else if(welcomeModal === false) {
     console.log("WELCOME!");
     $("#welcomeModal").modal({"show": "true", "backdrop": "static"});
 
@@ -59,7 +54,6 @@ $(window).on("load", function() {
     
     $(this).popover({
       html: true,
-      // template: ($("#popover-temp").find('.popover')[0]),
       template: popTemp,
       content: function() {
         return popContent.html();
@@ -68,7 +62,6 @@ $(window).on("load", function() {
     });
 
     $(this).popover("toggle");
-    // console.log(card); 
   })
 });
 
@@ -86,14 +79,9 @@ $(".entertainmentBtn").on("click",function(event){
     url: queryUrl,
     method: "GET"
   }).done(function(response){
-    // console.log(response);
-    // $("#welcomeModalBody").find('.interest-btn').prop("disabled", false);
-    // console.log("good zip code");
 
     $("#resultsPanel").addClass('hidden');
-    // Hides modal after clicking
     $("#welcomeModal").modal('hide');
-    // $("body").remove('.modal-backdrop');
     $("#deck").empty();
 
     var Url = "https://app.ticketmaster.com/discovery/v2/events.json?&sort=date,asc&";
@@ -111,23 +99,8 @@ $(".entertainmentBtn").on("click",function(event){
       method: "GET",
 
     }).done(function(response) {
-        
-      console.log(response);
-      // if(response.page.totalElements === 0){
-        
-      //   $("#resultsPanel").addClass('hidden');
-      //   // Hides modal after clicking
-      //   $("#welcomeModal").modal('hide');
-      //   $("body").remove('.modal-backdrop');
-      //   $("#deck").empty();
 
-      //   welcome(errorMessage);
-      //   return;
-      // }
-      var results = response._embedded.events;
-      // console.log(results);      
-
-      //iterate all events 
+      var results = response._embedded.events;     
 
       for(var i = 0;i < results.length; i++){
 
@@ -169,9 +142,8 @@ $(".entertainmentBtn").on("click",function(event){
       welcome(errorMessage);
     });
   }).fail(function(response) {
-  console.log("bad zip");
-  $("#zipcode").addClass('animated shake')
-  .one('webkitAnimationEnd oanimationend animationend', function() {
+    $("#zipcode").addClass('animated shake')
+    .one('webkitAnimationEnd oanimationend animationend', function() {
     $("#zipcode").removeClass('animated shake');
   });
   $("#welcomeModalBody").find('.interest-btn').prop("disabled", true);
@@ -187,41 +159,32 @@ $(".eventsBtn").on("click",function(){
   galoreUrl = "http://api.zippopotam.us/us/";
 
   var queryUrl = galoreUrl + zipcode;
-  console.log(queryUrl);
 
   $.ajax ({
     url: queryUrl,
     method: "GET"
   }).done(function(response){
-    console.log(response);
     $("#welcomeModalBody").find('.interest-btn').prop("disabled", false);
-    console.log("good zip code");
     
     // Hides modal after clicking
     $("#resultsPanel").addClass('hidden');
     $("#welcomeModal").modal('hide');
     $("#deck").empty();
     
-    console.log($("#name").val().trim());
-    console.log($("#zipcode").val().trim());
     name = $("#name").val().trim();
     var url= "https://www.eventbriteapi.com/v3/events/search/?date_modified.keyword=today&";
     var zipcodeUrlPath = "location.address=";
     zipcode = $("#zipcode").val().trim();
     var token = "&token=VHOSAZQCRGKLWAAH7UX2" 
     var queryUrl = url + zipcodeUrlPath+ zipcode + token;
-    console.log(queryUrl);
 
     // Ajax call
     $.ajax({
       url: queryUrl,
       method: "GET",
     }).done(function(response) {
-          
-      console.log(response);
-
-      var results = response.events;
-      console.log(results);      
+        
+      var results = response.events;    
 
     //iterate all events 
 
@@ -239,9 +202,6 @@ $(".eventsBtn").on("click",function(){
         // added by JWong
         cardDiv.attr("data-trigger", "manual");
         
-
-
-        //attribute for data-date
         var localTime = results[i].start.local;
         var dateSplit = localTime.split("T");
         var dateArray = dateSplit[0];
@@ -271,7 +231,6 @@ $(".eventsBtn").on("click",function(){
       welcome(errorMessage);
     });
   }).fail(function(response) {
-    console.log("bad zip");
     $("#zipcode").addClass('animated shake')
     .one('webkitAnimationEnd oanimationend animationend', function() {
       $("#zipcode").removeClass('animated shake');
@@ -285,18 +244,10 @@ $("#deck").on("click", ".popover-footer .yes", function() {
   $(this).parents(".popover").popover('destroy');
   var thisDiv = $(this);
   var thisPop = thisDiv.parents('.popover').eq(0);
-  console.log({thisDiv});
-  console.log({thisPop});
   var eventName = thisPop.data("name");
   var eventPoster = thisPop.data("image");
   var eventUrl = thisPop.data("url");
   var newEvent = database.ref().push();
-
-  console.log({name});
-  console.log({zipcode});
-  console.log("event name" + eventName);
-  console.log("event poster" + eventPoster);
-  console.log("new Event" + newEvent);
 
   newEvent.set({
     nameFB: name,
@@ -312,26 +263,21 @@ $("#deck").on("click", ".popover-footer .no", function() {
 });
 database.ref().on("child_added", function(childSnapShot) {
 
-  console.log(childSnapShot.val());
 
   var bannerName = childSnapShot.val().nameFB;
   var bannerEventName = childSnapShot.val().eventNameFB;
   var bannerEventPoster = childSnapShot.val().eventPosterFB;
   var bannerUrl = childSnapShot.val().eventURLFB
 
-  console.log(bannerName);
-  console.log(bannerEventPoster);
-  console.log(bannerEventName);
 
   var bannerContainer = $("<div>");
-  var bannerInnerDiv = $("<span>");
+  var bannerInnerDiv = $("<div>");
   // For the banner-josh
   var bannerInnerLink = $("<a>");
   bannerInnerLink.attr("href", bannerUrl);
   bannerInnerLink.attr("target","_blank")
-  bannerInnerDiv.addClass("bannerCardContent");
+  bannerInnerDiv.addClass("bannerCardContent text-center");
   bannerInnerDiv.attr("src", bannerEventPoster);
-  bannerInnerDiv.addClass("mySlides w3-animate-right")
   // bannerInnerImg.css("style", "100%" )
   var bannerInnerP = $("<p>");
   bannerInnerP.html(bannerName);
@@ -340,7 +286,7 @@ database.ref().on("child_added", function(childSnapShot) {
   // Josh addition
   bannerInnerImg.attr("width", "300px");
 
-  bannerInnerDiv.append(bannerInnerP);
+  bannerInnerDiv.prepend(bannerInnerP);
   bannerInnerLink.append(bannerInnerImg);
   bannerInnerDiv.append(bannerInnerLink);
   bannerContainer.append(bannerInnerDiv);
@@ -348,8 +294,6 @@ database.ref().on("child_added", function(childSnapShot) {
   // $(".slick-track").append(bannerContainer);
 $('#banner').slick('slickAdd',bannerContainer);
 
-  
-  // carousel();
  
 });
 
@@ -361,17 +305,13 @@ $("#zipcode").focusout(function(){
   galoreUrl = "http://api.zippopotam.us/us/";
 
   var queryUrl = galoreUrl + zipcode;
-  console.log(queryUrl);
 
   $.ajax ({
     url: queryUrl,
     method: "GET"
   }).done(function(response){
-    console.log(response);
     $("#welcomeModalBody").find('.interest-btn').prop("disabled", false);
-    console.log("good zip code");
   }).fail(function(response) {
-    console.log("bad zip");
     $("#zipcode").addClass('animated shake')
     .one('webkitAnimationEnd oanimationend animationend', function() {
       $("#zipcode").removeClass('animated shake');
@@ -385,7 +325,8 @@ $("#zipcode").focusout(function(){
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 4000,
+    arrows: false
   });
 
     
