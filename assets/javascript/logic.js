@@ -14,6 +14,7 @@ firebase.initializeApp(config);
 var database = firebase.database();
 var name = "";
 var zipcode = "";
+
 var welcomeMessage = "Looking for something to do? Welcome to your Friday night.<br>Lets get started..."
 var errorMessage = "Looks like there was a problem finding your results. Please try again."
 
@@ -25,6 +26,7 @@ function welcome(message) {
   // else if(welcomeModal === false) {
     console.log("WELCOME!");
     $("#welcomeModal").modal({"show": "true", "backdrop": "static"});
+
     setTimeout(function() {
       $("#welcomeMessage").empty();
       $("#welcomeMessage").html(message);
@@ -33,31 +35,10 @@ function welcome(message) {
     setTimeout(function() {
       $("#welcomeModalBody").removeClass("invisible")
     },4000);
-  //   welcomeModal = true;
-  // }
-  // else {
-  //   $("#welcomeModal").modal("show", "false");
-  //   welcomeModal = false;
-  // }
 }
-
-// console.log($("#welcomeModal"));
-// var welcomeModal = false;
 $(window).on("load", function() {
   welcome(welcomeMessage);
-  // setTimeout(welcome, 500);
-  // setTimeout(function() {
-  //   $("#welcomeMessage").append("<br>Lets get started...")
-  // },2500);
-  // setTimeout(function() {
-  //   $("#welcomeModalBody").removeClass("invisible")
-  // },4000);
-
-
-  // $("#launchModal").on("click", function() {
-  //   welcome();  
-  // });
-
+  
   $("#deck").on("click", ".contentCard", function() {
     var card = $(this);
     var pop = $("#popover-temp").find('.popover').eq(0);
@@ -69,10 +50,12 @@ $(window).on("load", function() {
 
     var popTemp = $("#popover-temp").html();
     var popContent = $("<div>");
+    var popContentDes = $("<p>");
     popContent.empty();
-    popContent.append("Date: " + card.attr('data-date')+"<br>");
+    popContent.append("<p>"+"Date: " + card.attr('data-date')+"</p>");
     popContent.append("Time: " + card.attr('date-time')+"<br>");
-    popContent.append("Description: " + card.attr('data-description')+"<br>");
+    popContentDes.append("<p>"+"Description: " + card.attr('data-description')+ "</p>");
+    popContent.append(popContentDes);
     
     $(this).popover({
       html: true,
@@ -126,6 +109,7 @@ $(".entertainmentBtn").on("click",function(event){
     $.ajax({
       url: queryUrl,
       method: "GET",
+
     }).done(function(response) {
         
       console.log(response);
@@ -256,6 +240,7 @@ $(".eventsBtn").on("click",function(){
         cardDiv.attr("data-trigger", "manual");
         
 
+
         //attribute for data-date
         var localTime = results[i].start.local;
         var dateSplit = localTime.split("T");
@@ -294,7 +279,6 @@ $(".eventsBtn").on("click",function(){
     $("#welcomeModalBody").find('.interest-btn').prop("disabled", true);
   })   
 }) //end eventBrite Button Listener
-
 
 // JWong version
 $("#deck").on("click", ".popover-footer .yes", function() {
@@ -339,6 +323,7 @@ database.ref().on("child_added", function(childSnapShot) {
   console.log(bannerEventPoster);
   console.log(bannerEventName);
 
+  var bannerContainer = $("<div>");
   var bannerInnerDiv = $("<span>");
   // For the banner-josh
   var bannerInnerLink = $("<a>");
@@ -346,6 +331,8 @@ database.ref().on("child_added", function(childSnapShot) {
   bannerInnerLink.attr("target","_blank")
   bannerInnerDiv.addClass("bannerCardContent");
   bannerInnerDiv.attr("src", bannerEventPoster);
+  bannerInnerDiv.addClass("mySlides w3-animate-right")
+  // bannerInnerImg.css("style", "100%" )
   var bannerInnerP = $("<p>");
   bannerInnerP.html(bannerName);
   var bannerInnerImg = $("<img>");
@@ -356,17 +343,16 @@ database.ref().on("child_added", function(childSnapShot) {
   bannerInnerDiv.append(bannerInnerP);
   bannerInnerLink.append(bannerInnerImg);
   bannerInnerDiv.append(bannerInnerLink);
+  bannerContainer.append(bannerInnerDiv);
 
+  // $(".slick-track").append(bannerContainer);
+$('#banner').slick('slickAdd',bannerContainer);
 
-  $("#banner").append(bannerInnerDiv);
-
-  addClassForBanner();
-
+  
+  // carousel();
+ 
 });
 
-function addClassForBanner(){
-$( "span:nth-of-type(1)" ).addClass("firstImage");
-}
 
 // $("#zipcode").focusout(checkZip);
 
@@ -394,38 +380,16 @@ $("#zipcode").focusout(function(){
   })
 });
 
-// function checkZip() {
-//   var zipcode =$("#zipcode").val();
-//   galoreUrl = "http://api.zippopotam.us/us/";
+  $("#banner").slick({
+    // setting-name: setting-value
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+  });
 
-//   var queryUrl = galoreUrl + zipcode;
-//   console.log(queryUrl);
-
-//   $.ajax ({
-//     url: queryUrl,
-//     method: "GET"
-//   }).done(function(response){
-
-//     console.log(response);
-//     $("#welcomeModalBody").find('.interest-btn').prop("disabled", false);
-//     // if (Object.keys(response).length === 0){
-//     //   console.log("not a good zipcode")
-//     // }
-//     // else {
-//     //   console.log(response + "this is good");
-//     // }
-//     console.log("good zip code");
-
-//   }).fail(function(response) {
-
-//     console.log("bad zip");
-//     $("#zipcode").addClass('animated shake')
-//     .one('webkitAnimationEnd oanimationend animationend', function() {
-//       $("#zipcode").removeClass('animated shake');
-//     });
-//     $("#welcomeModalBody").find('.interest-btn').prop("disabled", true);
-//   })
-// }
+    
+  
 
 
 
