@@ -70,7 +70,7 @@ $(".entertainmentBtn").on("click",function(event){
   
   event.preventDefault();
   var zipcode =$("#zipcode").val();
-  galoreUrl = "http://api.zippopotam.us/us/";
+  galoreUrl = "https://api.zippopotam.us/us/";
 
   var queryUrl = galoreUrl + zipcode;
   console.log(queryUrl);
@@ -172,7 +172,7 @@ $(".eventsBtn").on("click",function(){
     $("#deck").empty();
     
     name = $("#name").val().trim();
-    var url= "https://www.eventbriteapi.com/v3/events/search/?date_modified.keyword=today&";
+    var url= "http://www.eventbriteapi.com/v3/events/search/?date_modified.keyword=today&";
     var zipcodeUrlPath = "location.address=";
     zipcode = $("#zipcode").val().trim();
     var token = "&token=VHOSAZQCRGKLWAAH7UX2" 
@@ -302,7 +302,7 @@ $('#banner').slick('slickAdd',bannerContainer);
 
 $("#zipcode").focusout(function(){
   var zipcode =$(this).val();
-  galoreUrl = "http://api.zippopotam.us/us/";
+  galoreUrl = "http//api.zippopotam.us/us/";
 
   var queryUrl = galoreUrl + zipcode;
 
