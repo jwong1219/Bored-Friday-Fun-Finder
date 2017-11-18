@@ -1,4 +1,4 @@
-#Friday Fun Finder
+# Friday Fun Finder
 
 We created a webapp designed to source local events, concerts, restaurants, and other activities for users who are looking for something to do. We did this with a dynamic UI using modals, forms, banners, popovers, and an image slider. Under the hood we used Javascript and APIs to obtain the content 
 
@@ -23,13 +23,15 @@ Additionally no results will render if there are no events near the zipcode inpu
 Zipcode Validation- compares user type zipcode  to Zippopotam zipcode dataset to determine whelther zipcode is valid.
 
 Code block for validation of Zipcode.
-```.fail(function(response) {
+```
+.fail(function(response) {
     $("#zipcode").addClass('animated shake')
     .one('webkitAnimationEnd oanimationend animationend', function() {
       $("#zipcode").removeClass('animated shake');
     });
     $("#welcomeModalBody").find('.interest-btn').prop("disabled", true);
-  })```
+  })
+```
 
 Events/Entertainment exists- if API call does not response with a result, screen would fade out. And welcome modal would display again.
 
@@ -39,9 +41,10 @@ Events/Entertainment exists- if API call does not response with a result, screen
       $("#zipcode").removeClass('animated shake');
     });
     $("#welcomeModalBody").find('.interest-btn').prop("disabled", true);
-  })```
-
+  })
+```
 ## Deployment
+No build steps required. Open index.html in browser of choice.
 
 ## Built With
 using HTML5, CSS3, Twitter Bootstrap, JS, Animate.css, and Slick.css.
